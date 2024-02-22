@@ -27,21 +27,13 @@ export default function NavBar() {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      {/* Facebook and Youtube */}
-      <div className="bg-zinc-900 hidden lg:flex justify-center items-center h-8 w-full">
-        <div className="lg:w-[1024px] xl:w-[1280px] flex flex-row justify-end space-x-4 ">
-          <SiFacebook size={16} fill="white" />
-          <IoLogoYoutube size={16} fill="white" />
-        </div>
-      </div>
-
+    <div className="relative flex flex-col justify-center items-center bg-white/50">
       {/* Nav bar  */}
-      <div className="lg:w-[1024px] xl:w-[1280px] flex flex-row justify-between items-center h-24">
+      <div className="lg:w-[1024px] xl:w-[1280px] flex flex-row justify-between items-center h-24 ">
         {/*Nav bar logo */}
-        <GiCampingTent size={60} fill="orange" />
+        <Link href="/"><GiCampingTent size={60} fill="orange" /></Link>
         {/**Nav bar items */}
-        <div className="flex flex-row items-center space-x-6">
+        <div className="flex flex-row items-center space-x-8">
           {navItems.map((item) => (
             <Link className={`${currentPath === item.link ? "text-orange-500" : "text-zinc-500"} text-zinc-500 hover:text-orange-500 flex flex-row justify-between items-center `}
               key={item.title}
@@ -66,12 +58,12 @@ export default function NavBar() {
 function CategoryMenu({ title, link, categories }: { title: string, link: string, categories?: { title: string, link: string }[] }) {
   const currentPath = usePathname();
   return (
-    <div className="dropdown dropdown-hover">
+    <div className="dropdown dropdown-hover z-10">
       <div tabIndex={0} className=" m-1">
         <Link href={link}>{title}</Link>
       </div>
       {categories &&
-        <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <ul className="dropdown-content z-[5] menu p-2 shadow bg-base-100 rounded-box w-52">
           {categories?.map((item) => (
             <li
               key={item.title}
