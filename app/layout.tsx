@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
 import MessageBar from "./MessageBar";
+import Footer from "./Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,16 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <div>
-          <div>
+        <div >
             <MessageBar />
-          </div>
-          <div className="sticky top-0">
+          <div className="sticky top-0 z-10">
             <NavBar />
           </div>
-          <div>
             {children}
-          </div>
+            <Footer />
         </div>
       </body>
     </html>
