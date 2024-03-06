@@ -20,7 +20,14 @@ const config: Config = {
       'xs': '475px',
       ...defaultTheme.screens,
     },
+    container: {
+      center: true,
+      padding: '4rem',
+    },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require('tailwind-scrollbar'),
+  ],
 };
 export default config;

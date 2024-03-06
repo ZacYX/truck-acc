@@ -4,27 +4,25 @@ import { FiTruck } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { CiMenuBurger } from "react-icons/ci";
 
-type LinkType = {
-  title: string,
-  link: string,
-}
+import { LinkType, Product, Photo } from "./types";
+
 
 const navItems: LinkType[] = [
-  { title: "Blog", link: "/blog" },
   { title: "Contact", link: "/contact" },
+  { title: "Blog", link: "/blog" },
   { title: "About us", link: "/aboutus" },
 ];
 
-const menuItem: {title: string, icon: IconType, link: string, categories: LinkType[]} = {
-    title: "Shop",
-    icon:  CiMenuBurger,
-    link: "/shop",
-    categories: [
-      { title: "RoofTop Tent", link: "/rooftop-tent" },
-      { title: "Truck Topper", link: "/truck-topper" },
-      { title: "Truck Rack", link: "/truck-rack" },
-    ]
-  };
+const menuItem: { title: string, icon: IconType, link: string, categories: types.LinkType[] } = {
+  title: "Shop",
+  icon: CiMenuBurger,
+  link: "/shop/all",
+  categories: [
+    { title: "RoofTop Tent", link: "/shop/rooftop-tent" },
+    { title: "Truck Topper", link: "/shop/truck-topper" },
+    { title: "Truck Rack", link: "/shop/truck-rack" },
+  ]
+};
 
 const night = {
   title: "Good Prices, Good Quality",
@@ -65,15 +63,156 @@ const showCases = [
     index: 1,
     title: "Rooftop Tents",
     content: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pic: "/images/rooftop3.jpg",
+    pic: "/images/rooftop-topper.jpg",
   },
   {
     index: 2,
     title: "Truck Racks",
     content: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pic: "/images/rack2.jpg",
+    pic: "/images/rack-truck.jpg",
   },
 ]
 
+enum ProductCategory {
+  ROOTTOP_TENT,
+  TRUCK_TOPPER,
+  TRUCK_RACK,
+}
 
-export { navItems, menuItem, night, green, cards, showCases };
+const products: Product[] = [
+  {
+    id: 1,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 2,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 3,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 4,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 5,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 6,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 7,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+  {
+    id: 8,
+    category: ProductCategory.ROOTTOP_TENT,
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    image: "/images/rooftop-topper.jpg",
+    quantity: 5,
+    price: 3000,
+  },
+
+]
+
+const carouselImages: Photo[] = [
+  {
+    id: 1,
+    title: "cloud-tent-family-s",
+    path: "/images/cloud-tent-family-s.jpg",
+    width: 2400,
+    height: 1800,
+  },
+  {
+    id: 2,
+    title: "desert-tent-man-s",
+    path: "/images/desert-tent-man-s.jpg",
+    width: 2400,
+    height: 1600,
+
+  },
+  {
+    id: 3,
+    title: "mountain-tent-foot-s",
+    path: "/images/mountain-tent-foot-s.jpg",
+    width: 2400,
+    height: 1600,
+  },
+  {
+    id: 4,
+    title: "night-tent-man-s",
+    path: "/images/night-tent-man-s.jpg",
+    width: 2400,
+    height: 1600,
+  },
+  {
+    id: 5,
+    title: "sun-tent-s",
+    path: "/images/sun-tent-s.jpg",
+    width: 2400,
+    height: 1800,
+  },
+  {
+    id: 6,
+    title: "tree-rooftop-suv-s",
+    path: "/images/tree-rooftop-suv-s.jpg",
+    width: 2400,
+    height: 1350,
+  },
+  {
+    id: 7,
+    title: "tree-tent-fire-s",
+    path: "/images/tree-tent-fire-s.jpg",
+    width: 2400,
+    height: 1600,
+  },
+  {
+    id: 8,
+    title: "night-tree-tent-s",
+    path: "/images/night-tree-tent-s.jpg",
+    width: 2400,
+    height: 3600,
+  },
+]
+
+export { navItems, menuItem, night, green, cards, showCases, products, ProductCategory, carouselImages };

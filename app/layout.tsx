@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "./NavBar";
-import MessageBar from "./MessageBar";
-import Footer from "./Footer";
+import NavBar from "./components/NavBar";
+import MessageBar from "./components/MessageBar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <div >
-            <MessageBar />
+          <MessageBar />
           <div className="sticky top-0 z-10">
             <NavBar />
           </div>
-            {children}
-            <Footer />
+          {children}
+          <Footer />
         </div>
       </body>
     </html>
