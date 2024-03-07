@@ -27,7 +27,7 @@ export default function Footer() {
             <div>
               <p>Enter your email to subscribe</p>
               <input placeholder="Email"></input>
-              <button type="submit" className="bg-orange-500 ml-4 px-2">Send</button>
+              <button type="submit" className="bg-orange-500 ml-4 px-2">Subscribe</button>
             </div>
           </div>
 

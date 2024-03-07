@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
-import { Photo, Product } from "../constants/types";
+import { Photo, Product } from "../../../constants/types";
 import { IoIosArrowBack, IoIosArrowForward, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export default function PopupImage(
@@ -49,8 +49,8 @@ export default function PopupImage(
         className="relative box-border w-full h-full p-4 bg-white rounded-2xl "
       >
         <Image
-          src={imageList[imageIndex].path}
-          alt={imageList[imageIndex].title}
+          src={imageList[imageIndex].url}
+          alt={imageList[imageIndex].name}
           width={imageList[imageIndex].width}
           height={imageList[imageIndex].height}
           className={` w-full h-full object-center object-contain ${isLandscape ? "hover:cursor-zoom-in " : ""}`}
@@ -84,8 +84,8 @@ export default function PopupImage(
       {isOriginal &&
         <div className={` z-[60] fixed top-0 left-0 w-full h-[100vh] bg-white overflow-auto overscroll-none `}>
           <Image
-            src={imageList[imageIndex].path}
-            alt={imageList[imageIndex].title}
+            src={imageList[imageIndex].url}
+            alt={imageList[imageIndex].name}
             width={imageList[imageIndex].width}
             height={imageList[imageIndex].height}
             quality={100}

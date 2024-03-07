@@ -1,7 +1,7 @@
 "use client";
 
 import { products } from "@/app/constants/data";
-import Carousel from "@/app/components/Carousel";
+import Carousel from "@/app/shop/[category]/[productid]/Carousel";
 import { Product } from "@/app/constants/types";
 import { useEffect, useState } from "react";
 

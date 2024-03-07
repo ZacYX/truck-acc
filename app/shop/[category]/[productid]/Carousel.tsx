@@ -2,7 +2,7 @@
 
 import { useState, useRef, MouseEvent, useEffect } from "react";
 import Image from "next/image";
-import { carouselImages } from "../constants/data";
+import { carouselImages } from "../../../constants/data";
 import { IoIosArrowDown, IoIosArrowUp, IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PopupImage from "./PopupImage";
 
@@ -86,7 +86,7 @@ export default function Carousel({ isLandscape = true }: { isLandscape?: boolean
         >
           {carouselImages.map((item) => (
             <Image
-              key={item.id} src={item.path} alt={item.title} width={item.width} height={item.height}
+              key={item.id} src={item.url} alt={item.name} width={item.width} height={item.height}
               className={`hover:opacity-35 hover:cursor-pointer aspect-auto object-cover object-center ${isLandscape ? "w-full" : "h-full "}`}
               onClick={() => setCurrentImageIndex(carouselImages.indexOf(item))}
             />
@@ -111,7 +111,7 @@ export default function Carousel({ isLandscape = true }: { isLandscape?: boolean
       </div>
       {/* Carousel slides */}
       <div className={`${isLandscape ? "w-4/5 h-full" : "w-full h-4/5"} `}>
-        <Image src={carouselImages[currentImageIndex].path} alt={carouselImages[currentImageIndex].title}
+        <Image src={carouselImages[currentImageIndex].url} alt={carouselImages[currentImageIndex].name}
           width={carouselImages[currentImageIndex].width} height={carouselImages[currentImageIndex].height}
           className="w-full h-full object-center object-contain hover:cursor-zoom-in"
           onClick={() => setShowPopup(true)}

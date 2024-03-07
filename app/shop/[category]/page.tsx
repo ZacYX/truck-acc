@@ -1,6 +1,6 @@
 "use client";
 
-import ProductCard from "@/app/components/ProductCard";
+import ProductCard from "@/app/shop/[category]/ProductCard";
 import { menuItem, products } from "@/app/constants/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,11 +16,12 @@ export default function ProductListPage({ params }: { params: { category: string
         <div className="product-box flex-row justify-between gap-0 sm:gap-8">
           {/* Category panel */}
           <div className="">
-            <div className="sticky top-24 hidden sm:flex flex-col justify-start w-1/4 min-w-60 bg-white py-8 px-4">
+            <div className="sticky top-24 hidden sm:flex flex-col justify-start w-1/4 min-w-60 bg-white rounded-md py-8 px-4">
               <p className="text-xl font-bold text-zinc-400 py-2">Products categories</p>
               {
                 menuItem.categories.map((item) =>
                   <Link
+                    key={item.title}
                     href={item.link}
                     className={`${currentPath === item.link ? "text-orange-500" : "text-zinc-800"} hover:text-orange-500 py-1`}>
                     {item.title}
@@ -44,7 +45,12 @@ export default function ProductListPage({ params }: { params: { category: string
             </div>
             {/* Product list */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => <ProductCard key={product.id} {...product} />)}
+              {products.map((item) =>
+                <ProductCard
+                  key={item.id}
+                  {...item}
+                />
+              )}
             </div>
           </div>
 

@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String?
+  phone      String?
+  address    String?
+  postCode   String?
+  registerAt DateTime @default(now())
+  posts      Posts[]
+}
+
+model Posts {
+  id       Int      @id @default(autoincrement())
+  title    String
+  content  String?
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId Int      @unique
+}
+
+// model Order {
+//   id              String   @id @default(auto()) @map("_id") @db.ObjectId
+//   product         Product  @relation(fields: [productId], references: [id])
+//   color           Color
+//   size            Size
+//   shippingAddress Address  @relation(fields: [addressId], references: [id])
+//   billingAddress  Address? @relation(fields: [addressId], references: [id])
+//   productId       String   @db.ObjectId
+//   addressId       Int
+//   addressId       Int?
+// }
+
+// model Product {
+//   id       Int     @id @default(autoincrement())
+//   name     String
+//   category String
+//   details  String
+//   images   String
+//   quantity Int
+//   price    Float
+//   Order    Order[]
+// }
+
+model Photo {
+  id     Int    @id @default(autoincrement())
+  height Int    @default(200)
+  width  Int    @default(100)
+  url    String
+}
+
+model Address {
+  id     Int    @id @default(autoincrement())
+  street String
+  city   String
+  zip    String
+}
+
+enum Size {
+  Small
+  Medium
+  Large
+  XLarge
+}
+
+enum Color {
+  Red
+  Green
+  Blue
+}

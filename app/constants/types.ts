@@ -10,18 +10,18 @@ type Product = {
   name: string;
   category: ProductCategory;
   details: string;
-  image: string;
+  pictures: Picture[];
   quantity: number;
   price: number;
 
 }
 
-type Photo = {
+type Picture = {
   id: number,
-  title: string,
-  path: string,
+  name: string,
   width: number,
   height: number,
+  url: string,
 }
 
-export type { LinkType, Product, Photo }
+export type { LinkType, Product, Picture }
