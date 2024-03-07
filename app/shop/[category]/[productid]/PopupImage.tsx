@@ -1,12 +1,12 @@
 import { MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
-import { Photo, Product } from "../../../constants/types";
+import { Picture, Product } from "../../../constants/types";
 import { IoIosArrowBack, IoIosArrowForward, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export default function PopupImage(
   { imageList, imageIndex, isLandscape = true, callback }:
-    { imageList: Photo[], imageIndex: number, isLandscape?: boolean, callback: (e: MouseEvent, action: string) => void }) {
+    { imageList: Picture[], imageIndex: number, isLandscape?: boolean, callback: (e: MouseEvent, action: string) => void }) {
 
   const [isOriginal, setIsOriginal] = useState(false);
 

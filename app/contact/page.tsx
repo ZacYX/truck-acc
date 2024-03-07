@@ -1,7 +1,7 @@
-"use client";
+// "use client";
 
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+// import SimpleMDE from "react-simplemde-editor";
+// import "easymde/dist/easymde.min.css";
 
 export default function ContactPage() {
   return (
@@ -37,10 +37,10 @@ export default function ContactPage() {
               Message
               <input type="text" className="grow" />
             </label>
-            <SimpleMDE
+            {/* <SimpleMDE
               className="w-full"
               placeholder="More details ..."
-            />
+            /> */}
             <button type="submit" className="btn">Send</button>
           </div>
         </div>
