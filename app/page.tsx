@@ -38,9 +38,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-content-center">
             {
               cards.map((card) =>
-                <div key={card.title} className="">
-                  <InfoCard icon={card.icon} title={card.title} content={card.content} />
-                </div>
+                <InfoCard key={card.title} icon={card.icon} title={card.title} content={card.content} />
               )
             }
           </div>

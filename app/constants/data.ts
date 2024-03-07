@@ -37,17 +37,17 @@ const green = {
 const cards: { icon: IconType, title: string, content: string }[] = [
   {
     icon: GoBook,
-    title: "Environment Canada issued",
+    title: "Envi Canada issued",
     content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 centimetres is expected, although some areas west of Edmonton may",
   },
   {
     icon: TbPigMoney,
-    title: "Environment Canada issued ",
+    title: "Environment issued ",
     content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 ",
   },
   {
     icon: FiTruck,
-    title: "Environment Canada issued ",
+    title: "Environment Canada ",
     content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 centimetres is expected, although ",
   },
 ];
