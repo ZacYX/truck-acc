@@ -21,9 +21,9 @@ export default function DropdownMenu() {
         </Link>
       </div>
       <ul className="dropdown-content z-[5] menu p-2 shadow bg-base-100 rounded-box w-52">
-        {menuItem.categories.map((item) => (
+        {menuItem.categories.map((item, index) => (
           <li
-            key={item.title}
+            key={index}
           >
             <Link
               href={item.link}

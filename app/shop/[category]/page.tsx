@@ -19,9 +19,9 @@ export default function ProductListPage({ params }: { params: { category: string
             <div className="sticky top-24 hidden sm:flex flex-col justify-start w-1/4 min-w-60 bg-white rounded-md py-8 px-4">
               <p className="text-xl font-bold text-zinc-400 py-2">Products categories</p>
               {
-                menuItem.categories.map((item) =>
+                menuItem.categories.map((item, index) =>
                   <Link
-                    key={item.title}
+                    key={index}
                     href={item.link}
                     className={`${currentPath === item.link ? "text-orange-500" : "text-zinc-800"} hover:text-orange-500 py-1`}>
                     {item.title}
@@ -45,9 +45,9 @@ export default function ProductListPage({ params }: { params: { category: string
             </div>
             {/* Product list */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((item) =>
+              {products.map((item, index) =>
                 <ProductCard
-                  key={item.id}
+                  key={index}
                   {...item}
                 />
               )}

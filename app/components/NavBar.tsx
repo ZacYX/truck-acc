@@ -24,10 +24,10 @@ export default function NavBar() {
           <DropdownMenu />
           {/**Nav bar items */}
           <div className="hidden md:flex flex-row items-center space-x-8">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <Link
                 className={`${currentPath === item.link ? "text-orange-500" : "text-zinc-500"} hover:text-orange-500 flex flex-row justify-between items-center `}
-                key={item.title}
+                key={index}
                 href={item.link}
               >
                 {item.title}

@@ -37,8 +37,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-content-center">
             {
-              cards.map((card) =>
-                <InfoCard key={card.title} icon={card.icon} title={card.title} content={card.content} />
+              cards.map((card, index) =>
+                <InfoCard key={index} icon={card.icon} title={card.title} content={card.content} />
               )
             }
           </div>
@@ -48,7 +48,7 @@ export default function Home() {
       <div className="relative-box">
         <div className="content-box">
           <div className="w-full grid grid-cols-1 gap-16">
-            {showCases.map((item) => <ShowCase key={item.index} {...item} />)}
+            {showCases.map((item, index) => <ShowCase key={index} {...item} />)}
           </div>
         </div>
       </div>

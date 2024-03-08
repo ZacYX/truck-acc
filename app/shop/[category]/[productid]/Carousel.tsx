@@ -84,9 +84,9 @@ export default function Carousel({ isLandscape = true }: { isLandscape?: boolean
           ref={scrollRef}
           className={`w-full h-full flex gap-4 overflow-scroll scrollbar-none ${isLandscape ? "flex-col" : "flex-row"}`}
         >
-          {carouselImages.map((item) => (
+          {carouselImages.map((item, index) => (
             <Image
-              key={item.id} src={item.url} alt={item.name} width={item.width} height={item.height}
+              key={index} src={item.url} alt={item.name} width={item.width} height={item.height}
               className={`hover:opacity-35 hover:cursor-pointer aspect-auto object-cover object-center ${isLandscape ? "w-full" : "h-full "}`}
               onClick={() => setCurrentImageIndex(carouselImages.indexOf(item))}
             />
