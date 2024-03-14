@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, MouseEvent, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { carouselImages } from "../../../constants/data";
 import { IoIosArrowDown, IoIosArrowUp, IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -31,7 +31,7 @@ export default function Carousel({ isLandscape = true }: { isLandscape?: boolean
     }
   }
 
-  const handlePopupAction = (e: MouseEvent, action: string) => {
+  const handlePopupAction = (e: React.MouseEvent, action: string) => {
     switch (action) {
       case "close": {
         setShowPopup(false);

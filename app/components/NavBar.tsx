@@ -7,21 +7,21 @@ import { GiCampingTent } from "react-icons/gi";
 import { IoPersonOutline } from "react-icons/io5";
 import { BsCart2 } from "react-icons/bs";
 import { navItems } from "../constants/data";
-import DropdownMenu from "./DropDownMenu";
+import DropDownCategory from "./DropDownCategory";
 
 export default function NavBar() {
 
   const currentPath = usePathname();
 
   return (
-    <div className="relative-box flex-col bg-white/75">
+    <div className="relative-box flex-col bg-white">
       {/* Nav bar  */}
       <div className=" w-full page-padding max-content-w flex flex-row justify-between items-center h-24">
         {/*Nav bar logo */}
         <Link href="/"><GiCampingTent size={60} fill="orange" /></Link>
         <div className="flex flex-row space-x-8">
           {/* Shop menu */}
-          <DropdownMenu />
+          <DropDownCategory />
           {/**Nav bar items */}
           <div className="hidden md:flex flex-row items-center space-x-8">
             {navItems.map((item, index) => (

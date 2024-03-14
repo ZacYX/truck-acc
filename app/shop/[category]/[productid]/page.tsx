@@ -24,7 +24,7 @@ export default function ProductPage({ params }: { params: { category: string, pr
 
   return (
     <div className="relative-box">
-      <div className="content-box flex-row ">
+      <div className="flex-row ">
         <div className="w-full flex flex-col lg:flex-row gap-8">
           <p className="lg:hidden text-3xl py-4">{product.name}</p>
           <div className="w-full lg:w-2/3 h-[60vh] flex">
