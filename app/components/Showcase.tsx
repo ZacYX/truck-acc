@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Picture } from "../constants/types"
+import { Picture } from "@prisma/client"
 
 export default function ShowCase({ index, title, content, picture }: { index: number, title: string, content: string, picture: Picture }) {
   return (
@@ -9,7 +9,7 @@ export default function ShowCase({ index, title, content, picture }: { index: nu
         <p>{content}</p>
       </div>
       <div className={`w-full md:w-[45%] aspect-square`}>
-        <Image src={picture.url} alt={picture.name} width={picture.width} height={picture.height} className="w-full h-full object-center object-cover" />
+        <Image src={picture.url} alt={picture.name || "picture"} width={picture.width} height={picture.height} className="w-full h-full object-center object-cover" />
       </div>
     </div>
   )

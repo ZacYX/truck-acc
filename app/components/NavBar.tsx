@@ -6,11 +6,13 @@ import { usePathname } from "next/navigation";
 import { GiCampingTent } from "react-icons/gi";
 import { IoPersonOutline } from "react-icons/io5";
 import { BsCart2 } from "react-icons/bs";
-import { navItems } from "../constants/data";
+import { navItems } from "../lib/data";
 import DropDownCategory from "./DropDownCategory";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
-
+  const router = useRouter()
   const currentPath = usePathname();
 
   return (
@@ -37,7 +39,7 @@ export default function NavBar() {
         </div>
         {/**Login and shopping cart */}
         <div className="flex flex-row justify-end space-x-6">
-          <IoPersonOutline size={24} className="hover:text-orange-500" />
+          <IoPersonOutline size={24} className="hover:text-orange-500" onClick={() => router.push("/login")} />
           <BsCart2 size={24} className="hover:text-orange-500" />
         </div>
       </div>

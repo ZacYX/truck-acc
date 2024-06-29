@@ -1,6 +1,6 @@
 import Image from "next/image";
 import InfoCard from "./components/InfoCard";
-import { night, green, cards, showCases } from "./constants/data";
+import { night, green, cards, showCases } from "./lib/data";
 import ShowCase from "./components/Showcase";
 
 export default function Home() {

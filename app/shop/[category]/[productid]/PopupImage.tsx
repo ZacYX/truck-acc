@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
-import { Picture, Product } from "../../../constants/types";
+import { Picture, Product } from "@/app/lib/types";
 import { IoIosArrowBack, IoIosArrowForward, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export default function PopupImage(
@@ -50,7 +50,7 @@ export default function PopupImage(
       >
         <Image
           src={imageList[imageIndex].url}
-          alt={imageList[imageIndex].name}
+          alt={imageList[imageIndex].name || "picture"}
           width={imageList[imageIndex].width}
           height={imageList[imageIndex].height}
           className={` w-full h-full object-center object-contain ${isLandscape ? "hover:cursor-zoom-in " : ""}`}
@@ -85,7 +85,7 @@ export default function PopupImage(
         <div className={` z-[60] fixed top-0 left-0 w-full h-[100vh] bg-white overflow-auto overscroll-none `}>
           <Image
             src={imageList[imageIndex].url}
-            alt={imageList[imageIndex].name}
+            alt={imageList[imageIndex].name || "pic"}
             width={imageList[imageIndex].width}
             height={imageList[imageIndex].height}
             quality={100}

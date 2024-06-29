@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { menuItem } from "@/app/constants/data";
+import { menuItem } from "@/app/lib/data";
 import Link from "next/link";
 
 export default function CategoryPage() {

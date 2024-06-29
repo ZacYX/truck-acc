@@ -1,12 +1,13 @@
-import prisma from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { User, Email, Address, Post } from "@prisma/client";
-import { createAddress, createEmail, createPost, createUser } from "@/prisma/dbinterface";
+import { User, Email, Address, Post, Prisma } from "@prisma/client";
+import { createUser, findUserByName, findUserById, getUserCount, deleteUserById } from "@/prisma/lib/user-interface";
+import { createAddress } from "@/prisma/lib/address-interface";
+import { createPost } from "@/prisma/lib/post-interface";
+import { createEmail } from "@/prisma/lib/email-interface";
 
 export async function POST(req: NextRequest) {
   try {
     const contentType = req.headers.get("Content-Type");
-    console.log("content type: " + contentType);
 
     let data;
     if (contentType === "application/x-www-form-urlencoded") {
@@ -20,11 +21,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(null, { status: 400 });
     }
     const { emails, addresses, posts, ...user } = data;
-    // console.log("Request body: " + JSON.stringify(data));
-    // console.log("Request body user: " + JSON.stringify(user));
-    // console.log("Request body email:: " + JSON.stringify(emails));
-    // console.log("Request body address: " + JSON.stringify(addresses));
-    // console.log("Request body posts: " + JSON.stringify(posts));
 
     const userResult = await createUser(user as unknown as User);
 
@@ -72,10 +68,45 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    if (req.nextUrl.searchParams) { }
-    const user = await prisma.user.findMany();
-    return NextResponse.json(user, { status: 201 })
-  } catch (error) {
+    const take = Number.parseInt(req.nextUrl.searchParams.get("page-size") ?? "10");
+    const skip = (Number.parseInt(req.nextUrl.searchParams.get("page") ?? "1") - 1) * take;
+    if (req.nextUrl.searchParams?.has("id")) {
+      const id = req.nextUrl.searchParams.get("id") ?? "0";
+      const result = await findUserById(Number.parseInt(id));
+      return NextResponse.json(result, { status: 201 });
+    }
+    if (req.nextUrl.searchParams?.has("count")) {
+      const param = req.nextUrl.searchParams.get("count") ?? undefined;
+      const result = await getUserCount(param);
+      console.log("getCount: " + result);
+      return NextResponse.json(result, { status: 200 });
+    }
+    if (req.nextUrl.searchParams?.has("keyword")) {
+      const name = req.nextUrl.searchParams.get("keyword") ?? "";
+      const result = await findUserByName(name, skip, take);
+      return NextResponse.json(result, { status: 200 });
+    }
+    const result = await findUserByName(undefined, skip, take);
+    return NextResponse.json(result, { status: 200 });
 
+  } catch (error) {
+    console.error("Server error!")
+    return NextResponse.json(null, { status: 500 })
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    if (id) {
+      const result = await deleteUserById(Number.parseInt(id));
+      return NextResponse.json(result, { status: 202 });
+    }
+    return NextResponse.json("Id needed to delete a user!", { status: 400 })
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      return NextResponse.json(`prisma error code: ${e.code}`, { status: 400 })
+    }
+    return NextResponse.json(null, { status: 500 })
   }
 }

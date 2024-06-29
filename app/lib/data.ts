@@ -4,8 +4,37 @@ import { FiTruck } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { CiMenuBurger } from "react-icons/ci";
 
-import { LinkType, Product, Picture } from "./types";
+import { LinkType, } from "./types";
+import { Picture, Post, Product, User } from "@prisma/client";
 
+
+export const userInit: User = {
+  id: 0,
+  name: "",
+  phones: [""],
+  registerAt: new Date(),
+  updateAt: new Date(),
+}
+
+export const productInit: Product = {
+  id: 0,
+  sku: "",
+  name: "",
+  details: "",
+  quantity: 0,
+  price: 0,
+  size: "",
+  color: "",
+}
+
+export const postInit: Post = {
+  id: 0,
+  title: "",
+  content: "",
+  createAt: new Date(),
+  updateAt: new Date(),
+  authorId: 0,
+}
 
 const navItems: LinkType[] = [
   { title: "Contact", link: "/contact" },
@@ -59,6 +88,7 @@ const showCasePictures: Picture[] = [
     width: 1336,
     height: 819,
     url: "/images/topper.jpg",
+    productId: null
   },
   {
     id: 1,
@@ -66,6 +96,7 @@ const showCasePictures: Picture[] = [
     width: 800,
     height: 600,
     url: "/images/rooftop-topper.jpg",
+    productId: null
   },
   {
     id: 2,
@@ -73,6 +104,7 @@ const showCasePictures: Picture[] = [
     width: 530,
     height: 530,
     url: "/images/rack-truck.jpg",
+    productId: null
   },
 ]
 
@@ -241,4 +273,4 @@ const carouselImages: Picture[] = [
   },
 ]
 
-export { navItems, menuItem, night, green, cards, showCases, products, ProductCategory, carouselImages };
+export { navItems, menuItem, night, green, cards, showCases, products, ProductCategory, carouselImages, };

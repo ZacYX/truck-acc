@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { menuItem } from "../constants/data"
+import { menuItem } from "../lib/data"
 import { IoIosArrowDown } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";

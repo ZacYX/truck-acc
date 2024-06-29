@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Picture, Product } from "../../constants/types"
-import { ProductCategory } from "@/app/constants/data"
+import { Picture, Product } from "../../lib/types"
+import { ProductCategory } from "@/app/lib/data"
 
 export default function ProductCard({ id, category, name, pictures, price }: {
   id: number, category: ProductCategory, name: string, pictures: Picture[], price: number

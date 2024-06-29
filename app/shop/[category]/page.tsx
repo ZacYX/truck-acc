@@ -1,5 +1,5 @@
 import ProductCard from "@/app/shop/[category]/ProductCard";
-import { products } from "@/app/constants/data";
+import { products } from "@/app/lib/data";
 
 export default function ProductsByCategoryPage({ params }: { params: { category: string } }) {
   return (

@@ -1,8 +1,8 @@
 "use client";
 
-import { products } from "@/app/constants/data";
+import { products } from "@/app/lib/data";
 import Carousel from "@/app/shop/[category]/[productid]/Carousel";
-import { Product } from "@/app/constants/types";
+import { Product } from "@/app/lib/types";
 import { useEffect, useState } from "react";
 
 export default function ProductPage({ params }: { params: { category: string, productid: string } }) {

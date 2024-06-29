@@ -11,7 +11,7 @@ export default function ContactPage() {
     const user = {
       name: formData.get("name"),
       phones: [formData.has("phone") ? formData.get("phone") : undefined],
-      roles: [Role.POSTER],
+      roles: ["Poster"],
       emails: [{
         emailAddress: formData.has("email") ? formData.get("email") : undefined,
         isVerified: false,

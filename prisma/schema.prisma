@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "relationJoins"]
 }
 
 datasource db {
@@ -14,16 +15,60 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  emails     Email[]
-  password   String?
-  name       String?
-  phones     String[]
-  addresses  Address[]
-  registerAt DateTime  @default(now())
-  updateAt   DateTime  @updatedAt
-  posts      Post[]
-  roles      Role[]
+  id            Int            @id @default(autoincrement())
+  name          String?
+  phone         String?
+  secondPhone   String?
+  email         Email?
+  address       Address?
+  registerAt    DateTime       @default(now())
+  updateAt      DateTime       @updatedAt
+  posts         Post[]
+  roles         Role[]
+  passwordLogin PasswordLogin?
+}
+
+model PasswordLogin {
+  id           Int    @id @default(autoincrement())
+  loginName    String @unique
+  passwordHash String
+  user         User   @relation(fields: [userId], references: [id])
+  userId       Int    @unique
+}
+
+model Role {
+  id         Int          @id @default(autoincrement())
+  title      String
+  details    String
+  permission Permission[]
+  user       User[]
+}
+
+model Permission {
+  id      Int    @id @default(autoincrement())
+  title   String
+  details String
+  roles   Role[]
+}
+
+model Email {
+  id           Int     @id @default(autoincrement())
+  emailAddress String  @unique
+  isVerified   Boolean @default(false)
+  user         User    @relation(fields: [userId], references: [id])
+  userId       Int     @unique
+}
+
+model Address {
+  id      Int     @id @default(autoincrement())
+  unit    String?
+  street  String?
+  city    String?
+  provice String?
+  country String  @default("Canada")
+  zip     String?
+  user    User    @relation(fields: [userId], references: [id])
+  userId  Int     @unique
 }
 
 model Post {
@@ -37,29 +82,16 @@ model Post {
 }
 
 model Product {
-  id       Int       @id @default(autoincrement())
-  sku      String    @unique
-  name     String
-  details  String
-  quantity Int
-  price    Float
-  category Category  @default(EQUIPMENT)
-  size     Size?
-  color    Color?
-  pictures Picture[]
-}
-
-model Address {
-  id           Int           @id @default(autoincrement())
-  unit         String
-  street       String
-  city         String
-  provice      String
-  country      String        @default("Canada")
-  zip          String
-  user         User          @relation(fields: [userId], references: [id])
-  userId       Int
-  addressTypes AddressType[]
+  id         Int        @id @default(autoincrement())
+  sku        String     @unique
+  name       String
+  details    String
+  quantity   Int
+  price      Float
+  size       String?
+  color      String?
+  pictures   Picture[]
+  categories Category[]
 }
 
 model Picture {
@@ -72,42 +104,9 @@ model Picture {
   productId Int?
 }
 
-model Email {
-  id           Int     @id @default(autoincrement())
-  emailAddress String
-  isVerified   Boolean @default(false)
-  user         User?   @relation(fields: [userId], references: [id])
-  userId       Int?
-}
-
-enum Size {
-  Small
-  Medium
-  Large
-  XLarge
-}
-
-enum Color {
-  Red
-  Green
-  Blue
-}
-
-enum Category {
-  TOPPER
-  RACK
-  TENT
-  EQUIPMENT
-}
-
-enum Role {
-  SUBSCRIBER
-  POSTER
-  CUSTOMER
-}
-
-enum AddressType {
-  DEFAULT
-  SHIPPING
-  BILLING
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  details  String?
+  products Product[]
 }

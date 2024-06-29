@@ -11,15 +11,21 @@
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
+    "bcrypt": "^5.1.1",
     "easymde": "^2.18.0",
     "next": "14.1.0",
+    "next-auth": "^5.0.0-beta.16",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.0",
     "react-icons": "^5.0.1",
     "react-simplemde-editor": "^5.2.0",
-    "typia": "^5.5.5"
+    "typia": "^5.5.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
