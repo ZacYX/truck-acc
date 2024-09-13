@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateRole } from "../lib/zod-validation";
-import { createRole, deleteRoleById, findAllRole, findRoleById, findRoleByName, updateRole } from "@/prisma/lib/role-interface";
+import { validatePermission } from "../lib/zod-validation";
+import { createPermission, deletePermissionById, findAllPermission, findPermissionById, findPermissionByName, updatePermission } from "@/prisma/lib/permission-interface";
 import { Prisma } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
@@ -9,12 +9,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json("Wrong Content-Type", { status: 400 });
     }
     const data = await req.json();
-    console.log(`role data in route.ts: ${JSON.stringify(data)}`)
-    if (!validateRole.safeParse(data).success) {
-      console.log("Validate data of role error.");
-      return NextResponse.json("Validate data of role error", { status: 400 });
+    if (!validatePermission.safeParse(data).success) {
+      console.log("Validate data of permission error.");
+      return NextResponse.json("Validate data of permission error", { status: 400 });
     }
-    const result = await createRole(data);
+    const result = await createPermission(data);
     return NextResponse.json(result, { status: 201 })
   } catch (error) {
     if (error instanceof Error) {
@@ -31,14 +30,12 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json("Wrong Content-Type", { status: 400 });
     }
     const data = await req.json();
-    console.log(`role data in route.ts: ${JSON.stringify(data)}`)
-    if (!validateRole.safeParse(data).success) {
-      console.log("Validate data of role error.");
-      return NextResponse.json("Validate data of role error", { status: 400 });
+    if (!validatePermission.safeParse(data).success) {
+      console.log("Validate data of permission error.");
+      return NextResponse.json("Validate data of permission error", { status: 400 });
     }
-    const result = await updateRole(data);
+    const result = await updatePermission(data);
     return NextResponse.json(result, { status: 201 })
-
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
@@ -60,7 +57,7 @@ export async function GET(req: NextRequest) {
     if (id) {
       const idNumber = parseInt(id);
       if (idNumber) {
-        const result = await findRoleById(idNumber);
+        const result = await findPermissionById(idNumber);
         return NextResponse.json(result, { status: 200 });
       } else {
         return NextResponse.json("id must be a number", { status: 200 })
@@ -69,11 +66,11 @@ export async function GET(req: NextRequest) {
 
     const name = req.nextUrl.searchParams.get("keyword");
     if (name) {
-      const result = await findRoleByName(skip, take, name);
+      const result = await findPermissionByName(skip, take, name);
       return NextResponse.json(result, { status: 200 });
     }
 
-    const result = await findAllRole(skip, take);
+    const result = await findAllPermission(skip, take);
     return NextResponse.json(result, { status: 200 });
 
   } catch (error) {
@@ -93,7 +90,7 @@ export async function DELETE(req: NextRequest) {
     }
     const id = req.nextUrl.searchParams.get("id");
     if (id) {
-      const result = await deleteRoleById(Number.parseInt(id));
+      const result = await deletePermissionById(Number.parseInt(id));
       return NextResponse.json(result, { status: 202 });
     }
     return NextResponse.json("Id needed to delete!", { status: 400 })

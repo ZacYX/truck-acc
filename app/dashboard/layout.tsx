@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   })
 
-  console.log("data: " + JSON.stringify(data))
+  console.log("data: " + JSON.stringify(data?.user))
   console.log("status: " + JSON.stringify(status))
 
   // if (!data) {

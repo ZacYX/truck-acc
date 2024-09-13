@@ -1,58 +1,44 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import UserAddressCard from "./UserAddressCard";
+import { useEffect, useState } from "react";
+import { Role } from "@prisma/client";
+import { RxCross2 } from "react-icons/rx";
 
 export default function UserDetailsTable() {
 
   const { register, formState: { errors } } = useFormContext();
-  const { fields } = useFieldArray({ name: "roles" });
+  const { fields, append, remove } = useFieldArray({ name: "roles" });
+  const [options, setOptions] = useState<Role[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchAllRoles();
+      setOptions(result.data);
+    }
+    fetchData();
+  }, [])
 
   return (
     <div className="felx flex-col p-4 space-y-4">
       <div className="flex flex-row ">
         <label className="min-w-24">Name </label>
         <input
-          {...register("name", { required: true })}
+          {...register("name")}
           className="border-b-2 w-full "
-        // defaultValue={data?.name ?? ""}
         />
-      </div>
-      <div className="flex flex-row justify-between ">
-        <div className="flex flex-row w-2/5">
-          <label className="min-w-24">Phone </label>
-          <input
-            {...register("phone")}
-            className="border-b-2 w-full "
-          // defaultValue={data?.phone ?? ""}
-          />
-        </div>
-        <div className="flex flex-row w-2/5">
-          <label className="min-w-36">Second Phone </label>
-          <input
-            {...register("secondPhone")}
-            className="border-b-2 w-full "
-          // defaultValue={data?.secondPhone ?? ""}
-          />
-        </div>
       </div>
       <div className="flex flex-row ">
         <label className="min-w-24">Email</label>
         <input
-          {...register("email.emailAddress", { required: true })}
+          {...register("email")}
           className="border-b-2 w-full "
-        // defaultValue={data?.email.emailAddress ?? ""}
         />
-        <label className="ml-8 mr-4">Verified?</label>
+        <label className="ml-8 mr-4">Email Verified</label>
         <input
-          type="checkbox"
-          {...register("email.isVerified")}
-        // defaultChecked={data?.email.isVerified}
+          {...register("emailVerified")}
+          className="border-b-2 w-full "
+          disabled
         />
-      </div>
-      <div className="flex flex-row">
-        <label className="min-w-24">Address</label>
-        {
-          <UserAddressCard />
-        }
       </div>
       <div className="flex flex-wrap justify-between ">
         <div className="flex flex-row w-5/12 min-w-80 mr-20">
@@ -60,7 +46,7 @@ export default function UserDetailsTable() {
           <input
             {...register("registerAt")}
             className="border-b-2 w-full "
-          // required defaultValue={data?.name ?? ""}
+            disabled
           />
         </div>
         <div className="flex flex-row w-5/12 min-w-80">
@@ -68,6 +54,7 @@ export default function UserDetailsTable() {
           <input
             {...register("updateAt")}
             className="border-b-2 w-full "
+            disabled
           />
         </div>
       </div>
@@ -75,18 +62,64 @@ export default function UserDetailsTable() {
         <label className="min-w-24">Roles</label>
         {
           fields.map((field, index) => (
-            <input
-              key={field.id}
-              {...register(`roles.$(index).role`)}
-            />
+            <div
+              className="flex flex-row"
+            >
+              <  button
+                className="  bg-white min-h-4 h-6"
+                onClick={() => { remove(index) }}
+              ><RxCross2 /></button>
+              <input
+                disabled
+                key={field.id}
+                {...register(`roles.${index}.title`)}
+              />
+            </div>
           ))
         }
-        {/* <input
-          {...register("roles", { required: true })}
-          className="border-b-2 w-full "
-        // defaultValue={data?.roles.role ?? ""}
-        /> */}
+        <select
+          onChange={(e) => {
+            let id: number = parseInt(e.target.value);
+            append(options.find(item => item.id === id))
+          }}
+
+        >
+          <option>Append new role</option>
+          {
+            options.map((item, index) => (
+              <option key={index} value={item.id}>{item.title}</option>
+
+            ))
+          }
+        </select>
       </div>
     </div>
   )
+}
+
+async function fetchAllRoles() {
+  try {
+    let result;
+    let roles;
+    result = await fetch(`/api/role?take=100`, {
+      method: "GET",
+      headers: { "content-type": "application/json", }
+    })
+    if (result.status) {
+      roles = await result.json();
+      if (roles.totalCount > 100) {
+        result = await fetch(`/api/role?take=${roles.totalCount}`, {
+          method: "GET",
+          headers: { "content-type": "application/json", }
+        })
+        roles = await result.json();
+      }
+    } else {
+      console.log(`Role table fetch permission type failed.`)
+    }
+    return roles;
+  } catch (error) {
+    console.log(error);
+  }
+
 }

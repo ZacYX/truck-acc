@@ -12,12 +12,16 @@ import {
 
 export async function POST(req: NextRequest) {
   try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
     const data = await req.json();
     if (!validateProduct.safeParse(data).success) {
       console.log("Validate data of product error.");
       return NextResponse.json("Validate data of product error", { status: 400 });
     }
     const result = await createProduct(data);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
@@ -29,6 +33,9 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
     const take = parseInt(req.nextUrl.searchParams.get("page-size") ?? DEFAULT_PAGINATION_SIZE.toString());
     const skip = (parseInt(req.nextUrl.searchParams.get("page") ?? "1") - 1) * take;
 
@@ -70,6 +77,9 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
     const id = req.nextUrl.searchParams.get("id");
     if (id) {
       const idNumber = parseInt(id);

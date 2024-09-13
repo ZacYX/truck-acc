@@ -2,7 +2,7 @@
 
 import { products } from "@/app/lib/data";
 import Carousel from "@/app/shop/[category]/[productid]/Carousel";
-import { Product } from "@/app/lib/types";
+import { Product } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function ProductPage({ params }: { params: { category: string, productid: string } }) {

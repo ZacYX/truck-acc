@@ -10,6 +10,7 @@ import { navItems } from "../lib/data";
 import DropDownCategory from "./DropDownCategory";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import LoginButton from "../(auth)/login/LoginButton";
 
 export default function NavBar() {
   const router = useRouter()
@@ -39,7 +40,9 @@ export default function NavBar() {
         </div>
         {/**Login and shopping cart */}
         <div className="flex flex-row justify-end space-x-6">
-          <IoPersonOutline size={24} className="hover:text-orange-500" onClick={() => router.push("/login")} />
+          <LoginButton>
+            <IoPersonOutline size={24} className="hover:text-orange-500" />
+          </LoginButton>
           <BsCart2 size={24} className="hover:text-orange-500" />
         </div>
       </div>

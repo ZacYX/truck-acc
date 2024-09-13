@@ -10,12 +10,12 @@ export default function ContactPage() {
   const handleFormData = async (formData: FormData) => {
     const user = {
       name: formData.get("name"),
-      phones: [formData.has("phone") ? formData.get("phone") : undefined],
-      roles: ["Poster"],
-      emails: [{
+      phone: formData.has("phone") ? formData.get("phone") : undefined,
+      // roles: ["Poster"],
+      email: {
         emailAddress: formData.has("email") ? formData.get("email") : undefined,
         isVerified: false,
-      }],
+      },
       posts: [{
         title: formData.has("title") ? formData.get("title") : undefined,
         content: formData.has("content") ? formData.get("content") : undefined,
@@ -65,6 +65,11 @@ function PostForm() {
 
   }, [data])
 
+  const handleEmailBlur = async () => {
+    await fetch("/api/")
+
+  }
+
   return (
     <div
       className="w-full flex flex-col gap-4"
@@ -84,7 +89,9 @@ function PostForm() {
         </label>
         <label className="input input-bordered flex items-center ">
           Email
-          <input name="email" type="email" className="grow px-2" required />
+          <input name="email" type="email" className="grow px-2" required
+            onBlur={handleEmailBlur}
+          />
         </label>
       </div>
       {/* Message */}

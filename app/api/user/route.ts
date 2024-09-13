@@ -1,78 +1,77 @@
 import { NextRequest, NextResponse } from "next/server";
-import { User, Email, Address, Post, Prisma } from "@prisma/client";
-import { createUser, findUserByName, findUserById, getUserCount, deleteUserById } from "@/prisma/lib/user-interface";
-import { createAddress } from "@/prisma/lib/address-interface";
-import { createPost } from "@/prisma/lib/post-interface";
-import { createEmail } from "@/prisma/lib/email-interface";
+import { User, Address, Post, Prisma } from "@prisma/client";
+import { createUser, findUserByName, findUserById, getUserCount, deleteUserById, findAllUser, updateUser, findUserByEmail } from "@/prisma/lib/user-interface";
+import { validateUser } from "../lib/zod-validation";
+import { findAccountByLoginName } from "@/prisma/lib/auth-interface";
 
 export async function POST(req: NextRequest) {
   try {
-    const contentType = req.headers.get("Content-Type");
-
-    let data;
-    if (contentType === "application/x-www-form-urlencoded") {
-      //Request body of DataForm
-      data = Object.fromEntries(await req.formData());
-    } else if (contentType === "application/json") {
-      //Request body of Json
-      data = await req.json();
-    } else {
-      console.error("Wrong Content-Type");
-      return NextResponse.json(null, { status: 400 });
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
     }
-    const { emails, addresses, posts, ...user } = data;
-
-    const userResult = await createUser(user as unknown as User);
-
-    let emailResult = null;
-    if (emails) {
-      emailResult = await Promise.all(emails.map(async (item: Email) => {
-        item.userId = userResult.id;
-        return await createEmail(item)
-      }));
-      console.log("emailResult: " + JSON.stringify(emailResult));
+    let data = await req.json();
+    // console.log(`POST: ${JSON.stringify(data)}`)
+    const result = validateUser.safeParse(data);
+    if (!result.success) {
+      console.log("Validate data of user error." + JSON.stringify(result.error.issues));
+      return NextResponse.json(result.error.issues, { status: 400 });
     }
-
-    let addressResult = null;
-    if (addresses) {
-      addressResult = await Promise.all(addresses.map(async (item: Address) => {
-        item.userId = userResult.id;
-        return await createAddress(item);
-      }));
-      console.log("addressResult: " + JSON.stringify(addressResult));
-    }
-
-    let postResult = null;
-    if (posts) {
-      postResult = await Promise.all(posts.map(async (item: Post) => {
-        item.authorId = userResult.id;
-        return await createPost(item);
-      }));
-      console.log("postResult: " + JSON.stringify(postResult));
-    }
-
-    return NextResponse.json({
-      ...userResult,
-      emails: emailResult,
-      addresses: addressResult,
-      posts: postResult,
-    }, { status: 201 });
-
-
-
+    const extUser = await createUser(data);
+    return NextResponse.json({ extUser }, { status: 201 });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(null, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
+    } else {
+      return NextResponse.json(`Server error.`, { status: 500 })
+    }
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
+    let data = await req.json();
+    // console.log(`PUT: ${JSON.stringify(data)}`)
+    const result = validateUser.safeParse(data);
+    if (!result.success) {
+      console.log("Validate data of user error." + JSON.stringify(result.error.format()));
+      return NextResponse.json(result.error.format(), { status: 400 });
+    }
+    const extUser = await updateUser(data);
+    return NextResponse.json({ extUser }, { status: 201 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
+    } else {
+      return NextResponse.json(`Server error.`, { status: 500 })
+    }
   }
 }
 
 export async function GET(req: NextRequest) {
   try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
     const take = Number.parseInt(req.nextUrl.searchParams.get("page-size") ?? "10");
     const skip = (Number.parseInt(req.nextUrl.searchParams.get("page") ?? "1") - 1) * take;
+    if (req.nextUrl.searchParams?.has("loginName")) {
+      console.log("Auth login fetch user +++++++++++++++++");
+      const name = req.nextUrl.searchParams.get("loginName") ?? "";
+      const result = await findAccountByLoginName(name);
+      console.log("Auth login fetch user ----------------------");
+      return NextResponse.json(result, { status: 201 });
+    }
     if (req.nextUrl.searchParams?.has("id")) {
       const id = req.nextUrl.searchParams.get("id") ?? "0";
       const result = await findUserById(Number.parseInt(id));
+      return NextResponse.json(result, { status: 201 });
+    }
+    if (req.nextUrl.searchParams?.has("email")) {
+      const email = req.nextUrl.searchParams.get("email") ?? "";
+      const result = await findUserByEmail(email);
       return NextResponse.json(result, { status: 201 });
     }
     if (req.nextUrl.searchParams?.has("count")) {
@@ -86,27 +85,34 @@ export async function GET(req: NextRequest) {
       const result = await findUserByName(name, skip, take);
       return NextResponse.json(result, { status: 200 });
     }
-    const result = await findUserByName(undefined, skip, take);
+    const result = await findAllUser(skip, take);
     return NextResponse.json(result, { status: 200 });
 
   } catch (error) {
-    console.error("Server error!")
-    return NextResponse.json(null, { status: 500 })
+    if (error instanceof Error) {
+      return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
+    } else {
+      return NextResponse.json(`Server error.`, { status: 500 })
+    }
   }
 }
 
 export async function DELETE(req: NextRequest) {
   try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
     const id = req.nextUrl.searchParams.get("id");
     if (id) {
       const result = await deleteUserById(Number.parseInt(id));
       return NextResponse.json(result, { status: 202 });
     }
     return NextResponse.json("Id needed to delete a user!", { status: 400 })
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return NextResponse.json(`prisma error code: ${e.code}`, { status: 400 })
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
+    } else {
+      return NextResponse.json(`Server error.`, { status: 500 })
     }
-    return NextResponse.json(null, { status: 500 })
   }
 }

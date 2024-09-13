@@ -7,15 +7,31 @@ import DataTable from "./DataTable";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DataType } from "@/app/lib/types";
+import { userListTitle, roleListTitle, permissionListTitle, productListTitle, postListTitle } from "@/app/lib/data"
 
 const ITEM_PER_PAGE = 10;
 
 export default function Page({ params }: { params: { dt: string } }) {
   const route = params.dt;
   console.log("dynamic route: " + route);
-  if (route !== "user" && route !== "email" && route !== "post" && route !== "product") {
-    // throw new Error("wrong route!")
-    console.log(`${route} is not valid.`)
+  let tableTitle;
+  switch (route) {
+    case "user":
+      tableTitle = userListTitle;
+      break;
+    case "role":
+      tableTitle = roleListTitle;
+      break;
+    case "permission":
+      tableTitle = permissionListTitle;
+      break;
+    case "product":
+      tableTitle = productListTitle;
+    case "post":
+      tableTitle = postListTitle;
+    default:
+      console.log(`Not valid path`);
+      return
   }
   const baseUrl = `/api/${route}?`;
   const [count, setCount] = useState<number>(0);
@@ -97,6 +113,7 @@ export default function Page({ params }: { params: { dt: string } }) {
           <DataTable<DataType>
             // <DataTable<GetDataType<typeof params.dt>>
             data={data}
+            tableTitle={tableTitle}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
           />

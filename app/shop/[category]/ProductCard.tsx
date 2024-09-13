@@ -1,15 +1,18 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Picture, Product } from "../../lib/types"
-import { ProductCategory } from "@/app/lib/data"
+import { Picture, Product } from "@prisma/client"
 
-export default function ProductCard({ id, category, name, pictures, price }: {
-  id: number, category: ProductCategory, name: string, pictures: Picture[], price: number
+export default function ProductCard({ id, name, sku, price, pictures }: {
+  id: number,
+  name: string,
+  sku: string,
+  price: number,
+  pictures: Picture[]
 }) {
   return (
     <div className="min-w-48 flex flex-col justify-between items-center gap-4 bg-zinc-100 p-2 rounded-md">
       <Link
-        href={`/shop/${category}/${id}`}
+        href={`/shop/${id}`}
         className="h-full flex flex-col items-center gap-2"
       >
         <div className="w-full h-full flex justify-center items-center">

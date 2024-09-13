@@ -1,16 +1,21 @@
-import { Product, } from "@prisma/client";
-import prisma from "@/prisma/lib/prisma-singleton";
+import { Permission, Role } from "@prisma/client";
+import prisma from "./prisma-singleton";
+import { ExtendPermission } from "@/app/lib/types";
+import { connect } from "http2";
 
-export async function createProduct(product: Product) {
-  console.log("product: " + JSON.stringify(product))
+export async function createPermission(permission: ExtendPermission) {
+
   try {
-    const result = await prisma.product.create({
+    const result = await prisma.permission.create({
       data: {
-        ...product,
+        title: permission.title,
+        details: permission.details,
+        roles: {
+          connect: permission.roles?.map(item => ({ id: item.id }))
+        }
       }
     })
-    return result
-
+    return result;
   } catch (error) {
     if (error instanceof Error) {
       console.log(`error name: ${error.name} error message: ${error.message}`);
@@ -18,18 +23,48 @@ export async function createProduct(product: Product) {
       console.log("Write database error")
     }
     throw error;
-
   }
 }
 
-export async function findProductById(params: number) {
+export async function updatePermission(permission: ExtendPermission) {
+
   try {
-    const result = await prisma.product.findUnique({
+    const result = await prisma.permission.update({
       where: {
-        id: params,
+        id: permission.id,
       },
-    });
+      data: {
+        title: permission.title,
+        details: permission.details,
+        roles: {
+          set: [],
+          connect: permission.roles?.map(item => ({ id: item.id }))
+        }
+      }
+    })
     return result;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(`error name: ${error.name} error message: ${error.message}`);
+    } else {
+      console.log("Write database error")
+    }
+    throw error;
+  }
+}
+
+export async function findPermissionById(id: number) {
+  try {
+    const result = await prisma.permission.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        roles: true,
+      }
+    })
+    return result;
+
   } catch (error) {
     if (error instanceof Error) {
       console.log(`error name: ${error.name} error message: ${error.message}`);
@@ -37,43 +72,29 @@ export async function findProductById(params: number) {
       console.log("Read database error")
     }
     throw error;
+
   }
 }
 
-export async function findProductBySku(params: string) {
+export async function findPermissionByName(skip: number, take: number, name: string) {
   try {
-    const result = await prisma.product.findUnique({
-      where: {
-        sku: params,
-      },
-    });
-    return result;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(`error name: ${error.name} error message: ${error.message}`);
-    } else {
-      console.log("Read database error")
-    }
-    throw error;
-  }
-}
-
-export async function findProductByName(skip: number, take: number, productName: string) {
-  try {
-    const result = await prisma.product.findMany({
+    const result = await prisma.permission.findMany({
       skip: skip,
       take: take,
       where: {
-        name: {
-          contains: productName,
+        title: {
+          contains: name,
           mode: "insensitive",
         }
       },
+      include: {
+        roles: true,
+      }
     });
-    const count = await prisma.product.count({
+    const count = await prisma.permission.count({
       where: {
-        name: {
-          contains: productName,
+        title: {
+          contains: name,
           mode: "insensitive"
         }
       }
@@ -89,13 +110,16 @@ export async function findProductByName(skip: number, take: number, productName:
   }
 }
 
-export async function findAllProduct(skip: number, take: number) {
+export async function findAllPermission(skip: number, take: number) {
   try {
-    const result = await prisma.product.findMany({
+    const result = await prisma.permission.findMany({
       skip: skip,
       take: take,
+      include: {
+        roles: true,
+      }
     });
-    const count = await prisma.product.count();
+    const count = await prisma.permission.count();
     return { data: result, totalCount: count }
   } catch (error) {
     if (error instanceof Error) {
@@ -107,11 +131,11 @@ export async function findAllProduct(skip: number, take: number) {
   }
 }
 
-export async function deleteProductById(params: number) {
+export async function deletePermissionById(id: number) {
   try {
-    return await prisma.product.delete({
+    return await prisma.permission.delete({
       where: {
-        id: params,
+        id: id,
       }
     });
   } catch (error) {

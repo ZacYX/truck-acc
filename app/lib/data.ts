@@ -4,45 +4,21 @@ import { FiTruck } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { CiMenuBurger } from "react-icons/ci";
 
-import { LinkType, } from "./types";
-import { Picture, Post, Product, User } from "@prisma/client";
+import { Category, Picture, Post, Product, User } from "@prisma/client";
 
+export const userListTitle = ["id", "name", "email", "roles.title"]
+export const roleListTitle = ["id", "title", "details", "permission.title", "user.name"]
+export const permissionListTitle = ["id", "title", "details", "roles.title"]
+export const productListTitle = ["id", "sku", "name"]
+export const postListTitle = ["id", "title",]
 
-export const userInit: User = {
-  id: 0,
-  name: "",
-  phones: [""],
-  registerAt: new Date(),
-  updateAt: new Date(),
-}
-
-export const productInit: Product = {
-  id: 0,
-  sku: "",
-  name: "",
-  details: "",
-  quantity: 0,
-  price: 0,
-  size: "",
-  color: "",
-}
-
-export const postInit: Post = {
-  id: 0,
-  title: "",
-  content: "",
-  createAt: new Date(),
-  updateAt: new Date(),
-  authorId: 0,
-}
-
-const navItems: LinkType[] = [
+const navItems = [
   { title: "Contact", link: "/contact" },
   { title: "Blog", link: "/blog" },
   { title: "About us", link: "/aboutus" },
 ];
 
-const menuItem: { title: string, icon: IconType, link: string, categories: LinkType[] } = {
+const menuItem: { title: string, icon: IconType, link: string, categories: { title: String, link: String }[] } = {
   title: "Shop",
   icon: CiMenuBurger,
   link: "/shop/all",
@@ -130,88 +106,22 @@ const showCases: { index: number, title: string, content: string, picture: Pictu
 ]
 
 
-enum ProductCategory {
-  ROOTTOP_TENT,
-  TRUCK_TOPPER,
-  TRUCK_RACK,
+// enum ProductCategory {
+//   ROOTTOP_TENT,
+//   TRUCK_TOPPER,
+//   TRUCK_RACK,
+// }
+
+const productCategory: Category = {
+  id: 1,
+  name: "retrackable",
+  details: "retrackable roll up toneau cover",
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures,
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 2,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(1, 2),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 3,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(2, 3),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 4,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(2, 3),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 5,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(1, 3),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 6,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(0, 3),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 7,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(1, 3),
-    quantity: 5,
-    price: 3000,
-  },
-  {
-    id: 8,
-    category: ProductCategory.ROOTTOP_TENT,
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    pictures: showCasePictures.slice(2, 3),
-    quantity: 5,
-    price: 3000,
-  },
-
-]
-
+//TBD
+type extProduct = Product & {
+  pictures: Picture[],
+}
 
 const carouselImages: Picture[] = [
   {
@@ -220,6 +130,7 @@ const carouselImages: Picture[] = [
     url: "/images/cloud-tent-family-s.jpg",
     width: 2400,
     height: 1800,
+    productId: 0,
   },
   {
     id: 2,
@@ -227,6 +138,7 @@ const carouselImages: Picture[] = [
     url: "/images/desert-tent-man-s.jpg",
     width: 2400,
     height: 1600,
+    productId: 0,
 
   },
   {
@@ -235,6 +147,7 @@ const carouselImages: Picture[] = [
     url: "/images/mountain-tent-foot-s.jpg",
     width: 2400,
     height: 1600,
+    productId: 0,
   },
   {
     id: 4,
@@ -242,6 +155,7 @@ const carouselImages: Picture[] = [
     url: "/images/night-tent-man-s.jpg",
     width: 2400,
     height: 1600,
+    productId: 0,
   },
   {
     id: 5,
@@ -249,6 +163,7 @@ const carouselImages: Picture[] = [
     url: "/images/sun-tent-s.jpg",
     width: 2400,
     height: 1800,
+    productId: 0,
   },
   {
     id: 6,
@@ -256,6 +171,7 @@ const carouselImages: Picture[] = [
     url: "/images/tree-rooftop-suv-s.jpg",
     width: 2400,
     height: 1350,
+    productId: 0,
   },
   {
     id: 7,
@@ -263,6 +179,7 @@ const carouselImages: Picture[] = [
     url: "/images/tree-tent-fire-s.jpg",
     width: 2400,
     height: 1600,
+    productId: 0,
   },
   {
     id: 8,
@@ -270,7 +187,90 @@ const carouselImages: Picture[] = [
     url: "/images/night-tree-tent-s.jpg",
     width: 2400,
     height: 3600,
+    productId: 0,
   },
 ]
 
-export { navItems, menuItem, night, green, cards, showCases, products, ProductCategory, carouselImages, };
+const products: extProduct[] = [
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+  {
+    id: 1,
+    sku: "0001",
+    name: "Rooftop tent 1",
+    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    quantity: 100,
+    price: 3000,
+    size: "small",
+    color: "red",
+    pictures: carouselImages,
+  },
+
+]
+
+
+export { navItems, menuItem, night, green, cards, showCases, products, carouselImages, };

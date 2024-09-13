@@ -10,7 +10,6 @@ export default function AddressCard() {
         <input
           {...register("address.unit")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
       <div className="flex flex-row mr-10">
@@ -18,7 +17,6 @@ export default function AddressCard() {
         <input
           {...register("address.street")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
       <div className="flex flex-row mr-10">
@@ -26,7 +24,6 @@ export default function AddressCard() {
         <input
           {...register("address.city")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
       <div className="flex flex-row mr-10">
@@ -34,7 +31,6 @@ export default function AddressCard() {
         <input
           {...register("address.province")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
       <div className="flex flex-row mr-10">
@@ -42,15 +38,13 @@ export default function AddressCard() {
         <input
           {...register("address.country")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
       <div className="flex flex-row mr-10">
         <label>Zipcode</label>
         <input
-          {...register("address.zipcode")}
+          {...register("address.zip")}
           className="border-b-2 ml-2"
-        // defaultValue={data?.unit ?? ""}
         />
       </div>
 
