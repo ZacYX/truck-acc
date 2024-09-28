@@ -4,7 +4,6 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 import MessageBar from "./components/MessageBar";
 import Footer from "./components/Footer";
-import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,9 +25,7 @@ export default function RootLayout({
           <div className="sticky top-0 z-10">
             <NavBar />
           </div>
-          <SessionProvider>
-            {children}
-          </SessionProvider>
+          {children}
           <Footer />
         </div>
       </body>

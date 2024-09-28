@@ -10,7 +10,7 @@ import { navItems } from "../lib/data";
 import DropDownCategory from "./DropDownCategory";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import LoginButton from "../(auth)/login/LoginButton";
+import LoginButton from "../auth/components/LoginButton";
 
 export default function NavBar() {
   const router = useRouter()

@@ -1,10 +1,11 @@
-"use client"
+import { auth } from "@/auth";
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
 
   return (
     <div className="bg-white rounded-md">
-      Admin
+      {JSON.stringify(session)}
     </div>
   )
 }

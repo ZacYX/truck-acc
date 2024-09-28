@@ -38,11 +38,20 @@ export const validatePermission = z.object({
 
 export const validateUser = z.object({
   name: z.string().optional(),
-  email: z.string().optional(),
-  // emailVerified: z.string().datetime().optional(),
+  email: z.string().email().optional(),
+  emailVerified: z.string().datetime().optional(),
   image: z.string().optional(),
-  roles: z.optional(z.array(z.object({
-    title: z.string(),
-    detais: z.string().optional(),
-  }))),
+  password: z.string().optional(),
+})
+
+export const validateToken = z.object({
+  email: z.string().email(),
+})
+
+export const validateEmail = z.object({
+  from: z.string().email(),
+  to: z.union([z.array(z.string().email()), z.string().email()]),
+  subject: z.string().optional(),
+  text: z.string().optional(),
+  html: z.string().optional()
 })

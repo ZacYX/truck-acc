@@ -5,12 +5,12 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
 	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./app/**/*.{js,ts,jsx,tsx,mdx}",
-		"./node_modules/@nextui-org/theme/dist/components/(card|ripple).js"
-	],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/components/(button|card|input|spinner|ripple).js"
+  ],
 	theme: {
 		extend: {
 			backgroundImage: {
