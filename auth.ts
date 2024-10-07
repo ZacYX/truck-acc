@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import authConfig from "./auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/prisma/db-interface/prisma-singleton";
+import { UserRole } from "@prisma/client";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -62,6 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token }) {
+      console.log("jwt in auth called");
       if (!token.sub) {
         console.log(`No token sub!`);
         return token;
@@ -82,6 +84,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!existingUser) {
           console.log(`No user found!`);
         }
+        token.name = existingUser.name;
+        token.picture = existingUser.image;
         token.role = existingUser.role;
       } catch (error) {
         console.log(error);
@@ -89,11 +93,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
+      console.log("session in auth called");
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
+      if (token.name && session.user) {
+        session.user.name = token.name;
+      }
+      if (token.picture && session.user) {
+        session.user.image = token.picture;
+      }
       if (token.role && session.user) {
-        session.user.role = token.role;
+        session.user.role = token.role as UserRole;
       }
       return session;
     }

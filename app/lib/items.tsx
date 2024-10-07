@@ -4,42 +4,41 @@ import { FaProductHunt, FaUserCircle, FaRegAddressCard } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { ImUserMinus } from "react-icons/im";
 import { FaHandPaper } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { SideBarSectionItem } from "../dashboard/SideBarSection";
 
-const dashboardItems: {
-  name: string,
-  icon: ReactElement,
-  url: string,
-}[] = [
-    {
-      name: "Product",
-      icon: <FaProductHunt />,
-      url: "/dashboard/product",
-    },
-    {
-      name: "User",
-      icon: <FaUserCircle />,
-      url: "/dashboard/user",
-    },
-    {
-      name: "Role",
-      icon: < ImUserMinus />,
-      url: "/dashboard/role",
-    },
-    {
-      name: "Permission",
-      icon: <FaHandPaper />,
-      url: "/dashboard/permission",
-    },
-    // {
-    //   name: "Email",
-    //   icon: <MdOutlineEmail />,
-    //   url: "/dashboard/email",
-    // },
-    {
-      name: "Post",
-      icon: <FaRegAddressCard />,
-      url: "/dashboard/post",
-    },
-  ]
+export const settingsSectionItems: SideBarSectionItem[] = [
+  {
+    name: "Profile",
+    path: "/dashboard/settings/profile",
+    icon: <ImProfile />
+  }
+]
 
-export { dashboardItems }
+export const adminSectionItems: SideBarSectionItem[] = [
+  {
+    name: "Product",
+    icon: <FaProductHunt />,
+    path: "/dashboard/admin/product",
+  },
+  {
+    name: "User",
+    icon: <FaUserCircle />,
+    path: "/dashboard/admin/user",
+  },
+  // {
+  //   name: "Role",
+  //   icon: < ImUserMinus />,
+  //   path: "/dashboard/admin/role",
+  // },
+  // {
+  //   name: "Permission",
+  //   icon: <FaHandPaper />,
+  //   path: "/dashboard/admin/permission",
+  // },
+  // {
+  //   name: "Post",
+  //   icon: <FaRegAddressCard />,
+  //   path: "/dashboard/admin/post",
+  // },
+]

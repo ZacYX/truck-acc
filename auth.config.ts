@@ -31,7 +31,6 @@ export default {
             if (response.ok) {
               const user = await response.json();
               if (!user || !user.password) return null;
-              console.log("fetch user: ", JSON.stringify(user));
               const passwordMatch = await bcrypt.compare(password, user.password);
               if (passwordMatch) return user;
             }

@@ -11,8 +11,15 @@ export const publicRoutes = [
  * if not logged in
  */
 export const protectRoutes = [
+  "/aaaa",
+]
+
+/**
+ * An arry of directories that are not accessible 
+ * if not logged in
+ */
+export const protectDirs = [
   "/dashboard",
-  "/settings",
 ]
 
 /**
@@ -35,4 +42,5 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after logged in
  */
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard/settings/profile";
+export const DEFAULT_LOGOUT_REDIRECT = "/auth/login";

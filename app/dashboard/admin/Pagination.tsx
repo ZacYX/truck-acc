@@ -8,14 +8,18 @@ export default function Pagination({
   pageSize,
   setPageCallback
 }: {
-  totalCount: number,
-  currentPage: number,
-  pageSize: number,
-  setPageCallback: (nextPage: number) => void,
+  totalCount?: number,
+  currentPage?: number,
+  pageSize?: number,
+  setPageCallback?: (nextPage: number) => void,
 }) {
+  const localTotalCount = totalCount ?? 1;
+  const localCurrentPage = currentPage ?? 1;
+  const localPageSize = pageSize ?? 10;
+  const localSetPageCallback = setPageCallback ?? (() => { console.log("No callback set") });
 
   const pages: number[] = [];
-  for (let i = 0; i < totalCount / pageSize; i++) {
+  for (let i = 0; i < localTotalCount / localPageSize; i++) {
     pages.push(i + 1);
   }
 
@@ -23,8 +27,8 @@ export default function Pagination({
     <form className="w-full flex flex-row justify-center items-center gap-4 py-4 ">
       <button
         className="hover:text-orange-500 disabled:text-zinc-400"
-        disabled={currentPage === 1}
-        formAction={() => setPageCallback(currentPage - 1)}
+        disabled={localCurrentPage === 1}
+        formAction={() => localSetPageCallback(localCurrentPage - 1)}
         type="submit"
       >
         <MdKeyboardArrowLeft />
@@ -34,8 +38,8 @@ export default function Pagination({
           pages.map((page, index) => (
             <button
               key={index}
-              className={`hover:text-orange-500 visited:text-zinc-200 ${currentPage === page ? "text-orange-500" : ""}`}
-              formAction={() => setPageCallback(page)}
+              className={`hover:text-orange-500 visited:text-zinc-200 ${localCurrentPage === page ? "text-orange-500" : ""}`}
+              formAction={() => localSetPageCallback(page)}
               type="submit"
             >
               {page}
@@ -45,8 +49,8 @@ export default function Pagination({
       </div>
       <button
         className="hover:text-orange-500 disabled:text-zinc-400"
-        disabled={currentPage === pages.length}
-        formAction={() => setPageCallback(currentPage + 1)}
+        disabled={localCurrentPage === pages.length}
+        formAction={() => localSetPageCallback(localCurrentPage + 1)}
         type="submit"
       >
         <MdKeyboardArrowRight />

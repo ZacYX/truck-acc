@@ -1,41 +1,48 @@
 "use client";
 
-import { dashboardItems } from "@/app/lib/items";
-import Link from "next/link";
 import Avatar from "./Avatar";
-import { usePathname } from "next/navigation";
+import LogoutButton from "../auth/components/LogoutButton";
+
+import SideBarSection from "./SideBarSection";
+import { adminSectionItems, settingsSectionItems } from "../lib/items";
+import { User, UserRole } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { useCurrentUser } from "../hook/session";
+
 
 export default function SideBar() {
-  const currentPath = usePathname();
+  const [role, setRole] = useState<string>();
+  const user = useCurrentUser() as User;
+
+  useEffect(() => {
+    const fetchUserRole = () => {
+      const userRole = user?.role;
+      if (userRole) {
+        setRole(userRole);
+      }
+    };
+    fetchUserRole();
+  }, [user]);
 
   return (
     <div className="min-w-64 flex flex-col justify-start items-start bg-white rounded-md p-4">
       <div className="w-full flex flex-row py-4">
-        <Avatar />
+        <Avatar image={user?.image ?? undefined} />
         <div className="px-4 ">
-          <p className="font-bold">User Name</p>
-          <p className="text-xs">User Role</p>
+          <p className="font-bold">{user?.name ?? "User Name"}</p>
+          <p className="text-xs">{user?.role ?? "User role"}</p>
         </div>
       </div>
       <div className="w-full py-2">
-        <div className="min-w-20 py-2">
-          <p>Pages</p>
-        </div>
-        {
-          dashboardItems.map((item, index) => (
-            <div
-              key={index}
-              className={`w-full min-w-20 flex flex-row justify-start px-4 py-2 rounded-md hover:bg-zinc-200 transition-all ${currentPath === item.url ? "bg-zinc-200" : ""}`}>
-              <Link
-                href={item.url}
-                className="flex flex-row items-center gap-2"
-              >
-                {item.icon}
-                {item.name}
-              </Link>
-            </div>
-          ))
+        <SideBarSection name="Settings" items={settingsSectionItems} />
+        {role === UserRole.ADMIN &&
+          <SideBarSection name="Admin" items={adminSectionItems} />
         }
+        <div className="min-w-20 py-2 hover:bg-zinc-200 transition-all border-t-2">
+          <LogoutButton >
+            Sign Out
+          </LogoutButton>
+        </div>
 
       </div>
     </div>

@@ -39,9 +39,10 @@ export const validatePermission = z.object({
 export const validateUser = z.object({
   name: z.string().optional(),
   email: z.string().email().optional(),
-  emailVerified: z.string().datetime().optional(),
-  image: z.string().optional(),
+  emailVerified: z.string().datetime().optional().nullable(),
+  image: z.string().optional().nullable(),
   password: z.string().optional(),
+  role: z.enum(['USER', 'ADMIN']).optional(),
 })
 
 export const validateToken = z.object({

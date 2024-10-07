@@ -1,5 +1,6 @@
 "use client"
 
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useRouter } from "next/navigation";
 
 type LoginButtonProps = {
@@ -12,8 +13,8 @@ export default function LoginButton({ children, mode = "redirect", asChild }: Lo
   const router = useRouter();
 
   const onclick = () => {
-    console.log("LoginButton clicked")
-    router.push("/auth/login")
+    console.log("Login button clicked");
+    router.push(DEFAULT_LOGIN_REDIRECT);
 
   }
 
