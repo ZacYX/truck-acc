@@ -7,8 +7,16 @@ import {
   findProductBySku,
   findProductByName,
   findAllProduct,
-  deleteProductById
-} from "@/prisma/lib/product-interface";
+  deleteProductById,
+  updateProduct,
+  getProductCount,
+  connectCategories,
+  disconnectCategories
+} from "@/prisma/db-interface/product";
+import { OmitProduct } from "@/prisma/db-interface/product";
+import { Category, Product } from "@prisma/client";
+
+type ProductWithCategory = Product & { categories: Category[] };
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,12 +24,78 @@ export async function POST(req: NextRequest) {
       return NextResponse.json("Wrong Content-Type", { status: 400 });
     }
     const data = await req.json();
-    if (!validateProduct.safeParse(data).success) {
-      console.log("Validate data of product error.");
+    const product: OmitProduct = {
+      ...data,
+      inventory: data.inventory ? parseInt(data.inventory) : null,
+      price: data.price ? parseInt(data.price) : null,
+      salePrice: data.salePrice ? parseInt(data.salePrice) : null,
+    }
+    const validationResult = validateProduct.safeParse(product);
+    if (!validationResult.success) {
+      console.log(`Validate data of product error: ${validationResult.error}`);
       return NextResponse.json("Validate data of product error", { status: 400 });
     }
-    const result = await createProduct(data);
+    const result = await createProduct(product);
     return NextResponse.json(result, { status: 201 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
+    } else {
+      return NextResponse.json(`Server error.`, { status: 500 })
+    }
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    if (req.headers.get("Content-Type") !== "application/json") {
+      return NextResponse.json("Wrong Content-Type", { status: 400 });
+    }
+    const data = await req.json();
+    //omit createAt and updateAt from product to update 
+    const { id: productId, createAt, updateAt, categories, ...product } = data;
+    if (!productId) {
+      console.error(`Id needed to update product`);
+      return;
+    }
+    if (product.inventory) {
+      product.inventory = parseInt(product.inventory);
+    }
+    if (product.price) {
+      product.price = parseInt(product.price);
+    }
+    if (product.salePrice) {
+      product.salePrice = parseInt(product.salePrice);
+    }
+    const productResult = await updateProduct(parseInt(productId), product);
+    if (!productResult) {
+      return NextResponse.json(`update product failed`, { status: 500 });
+    }
+    if (categories) {
+      //get existing categories connected
+      const { categories: connectedCategories } = productResult;
+      //categories: {id: number}[] to connect 
+      const connectedCategoryIds: Number[] = connectedCategories.map(((cat: Category) => cat.id));
+      const categoriesToConnect: Array<{ id: number }> = [];
+      categories.forEach((cat: { id: string }) => {
+        const catId = parseInt(cat.id);
+        if (Number.isInteger(catId) && !connectedCategoryIds.includes(catId)) {
+          categoriesToConnect.push({ id: catId });
+        }
+      });
+      const connectResult = await connectCategories(parseInt(productId), categoriesToConnect);
+      //categories: {id: number}[] to disconnect 
+      const inputCategoryIds: Number[] = categories.map((cat: { id: string }) => parseInt(cat.id));
+      const categoriesToDisconnect: Array<{ id: number }> = [];
+      connectedCategories.forEach((cat) => {
+        if (!inputCategoryIds.includes(cat.id)) {
+          categoriesToDisconnect.push({ id: cat.id });
+        }
+      });
+      const disconnectResult = await disconnectCategories(parseInt(productId), categoriesToDisconnect);
+      return NextResponse.json({ disconnectResult }, { status: 200 });
+    }
+    return NextResponse.json(productResult, { status: 200 })
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(`${error.message}, case:${error.cause}`, { status: 500 });
@@ -33,11 +107,13 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    if (req.headers.get("Content-Type") !== "application/json") {
-      return NextResponse.json("Wrong Content-Type", { status: 400 });
-    }
     const take = parseInt(req.nextUrl.searchParams.get("page-size") ?? DEFAULT_PAGINATION_SIZE.toString());
     const skip = (parseInt(req.nextUrl.searchParams.get("page") ?? "1") - 1) * take;
+
+    if (req.nextUrl.searchParams.has("count")) {
+      const result = await getProductCount();
+      return NextResponse.json(result, { status: 200 });
+    }
 
     const id = req.nextUrl.searchParams.get("id");
     if (id) {
@@ -77,14 +153,11 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    if (req.headers.get("Content-Type") !== "application/json") {
-      return NextResponse.json("Wrong Content-Type", { status: 400 });
-    }
     const id = req.nextUrl.searchParams.get("id");
     if (id) {
       const idNumber = parseInt(id);
-      if (idNumber) {
-        const result = deleteProductById(idNumber);
+      if (Number.isInteger(idNumber)) {
+        const result = await deleteProductById(idNumber);
         return NextResponse.json(result, { status: 200 });
       } else {
         return NextResponse.json("id must  be number.", { status: 400 })

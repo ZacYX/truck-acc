@@ -5,6 +5,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { ImUserMinus } from "react-icons/im";
 import { FaHandPaper } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
+import { MdCategory } from "react-icons/md";
 import { SideBarSectionItem } from "../dashboard/SideBarSection";
 
 export const settingsSectionItems: SideBarSectionItem[] = [
@@ -17,14 +18,19 @@ export const settingsSectionItems: SideBarSectionItem[] = [
 
 export const adminSectionItems: SideBarSectionItem[] = [
   {
+    name: "User",
+    icon: <FaUserCircle />,
+    path: "/dashboard/admin/user",
+  },
+  {
     name: "Product",
     icon: <FaProductHunt />,
     path: "/dashboard/admin/product",
   },
   {
-    name: "User",
-    icon: <FaUserCircle />,
-    path: "/dashboard/admin/user",
+    name: "Category",
+    icon: <MdCategory />,
+    path: "/dashboard/admin/category",
   },
   // {
   //   name: "Role",

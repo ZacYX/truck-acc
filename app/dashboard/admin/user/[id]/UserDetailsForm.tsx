@@ -51,7 +51,6 @@ export default function UserDetailsForm({ id }: { id: string }) {
 
   return (
     <div>
-
       <div className="border-b-2 py-2 mb-8 flex flex-row justify-between items-center">
         <h2 className="font-semibold">User details</h2>
       </div>

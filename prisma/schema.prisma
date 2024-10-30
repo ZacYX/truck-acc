@@ -28,8 +28,7 @@ model User {
   password      String?
   role          UserRole  @default(USER)
   accounts      Account[]
-
-  @@map("users")
+  reviews       Review[]
 }
 
 model Account {
@@ -49,7 +48,6 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map("accounts")
 }
 
 model VerificationToken {
@@ -83,28 +81,44 @@ model Product {
   id         Int        @id @default(autoincrement())
   sku        String     @unique
   name       String
-  details    String
-  quantity   Int
-  price      Float
-  size       String?
-  color      String?
-  pictures   Picture[]
+  details    String?
+  brand      String?
+  inventory  Int?
+  price      Float?
+  salePrice  Float?
+  createAt   DateTime   @default(now())
+  updateAt   DateTime   @updatedAt
+  images     Picture[]
   categories Category[]
+  reviews    Review[]
 }
 
 model Picture {
   id        Int      @id @default(autoincrement())
-  name      String?
-  height    Int      @default(200)
-  width     Int      @default(100)
+  alt       String?
+  height    Int?
+  width     Int?
   url       String
+  isPrimary Boolean? @default(false)
   Product   Product? @relation(fields: [productId], references: [id])
   productId Int?
+  createAt  DateTime @default(now())
 }
 
 model Category {
   id       Int       @id @default(autoincrement())
-  name     String
+  name     String    @unique
   details  String?
   products Product[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  userId    String
+  rating    Int
+  comment   String
+  createAt  DateTime @default(now())
+  Product   Product  @relation(fields: [productId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
 }

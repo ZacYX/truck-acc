@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           body: JSON.stringify(data),
         })
       } catch (error) {
-        console.log(`Update email verified error in linkAccount!`);
+        console.error(`Update email verified error in linkAccount!`);
       }
     }
   },
@@ -63,7 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token }) {
-      console.log("jwt in auth called");
+      console.debug("jwt in auth called");
       if (!token.sub) {
         console.log(`No token sub!`);
         return token;
@@ -93,7 +93,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      console.log("session in auth called");
+      console.debug("session in auth called");
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }

@@ -7,12 +7,11 @@ export const isString = z.string({ invalid_type_error: "Not a string" });
 export const validateProduct = z.object({
   sku: z.string(),
   name: z.string(),
-  details: z.string(),
-  quantity: z.number(),
-  price: z.number(),
-  category: z.number(),
-  size: z.string(),
-  color: z.string(),
+  details: z.string().nullable(),
+  brand: z.string().nullable(),
+  inventory: z.number().nullable(),
+  price: z.number().nullable(),
+  salePrice: z.number().nullable(),
 })
 
 export const validatePost = z.object({
@@ -55,4 +54,17 @@ export const validateEmail = z.object({
   subject: z.string().optional(),
   text: z.string().optional(),
   html: z.string().optional()
+})
+
+export const validateCategory = z.object({
+  name: z.string(),
+  details: z.string().optional(),
+})
+
+export const validatePicture = z.object({
+  alt: z.string().nullable(),
+  height: z.number().nullable(),
+  width: z.number().nullable(),
+  url: z.string(),
+  isPrimary: z.boolean().nullable(),
 })
