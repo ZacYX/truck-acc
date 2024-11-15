@@ -13,7 +13,11 @@ import { MessageContext } from "./CardWrapper";
 import type { Message } from "./CardWrapper";
 
 export default function RegisterForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof registerSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",

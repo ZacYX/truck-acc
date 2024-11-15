@@ -82,11 +82,10 @@ export default function ImageCard({ field, index, remove }: {
             />
           </label>
           <label className="flex flex-row items-center">
-            isPrimary
+            Order
             <input
-              className="outline-none border-b-1 ml-2"
-              type="checkbox"
-              {...register(`images.${index}.isPrimary`)}
+              className="outline-none border-b-1 ml-2 max-w-16"
+              {...register(`images.${index}.order`)}
             />
           </label >
         </div>

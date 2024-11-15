@@ -1,11 +1,10 @@
 import { useFieldArray, useFormContext, Control } from "react-hook-form";
 import ImageCard from "./ImageCard";
-import { PictureInfo, ProductDetails, } from "./NewProductDetailsForm";
+import { ProductDetails, } from "./NewProductDetailsForm";
 import { FormEvent, forwardRef, useImperativeHandle, } from "react";
-import { Picture } from "@prisma/client";
 
 
-const ImageEditor = forwardRef((props, ref) => {
+const ImageEditor = forwardRef(function ImageEditor(props, ref) {
   const { register, control, getValues } = useFormContext<ProductDetails>();
   const { fields, append, update, remove } = useFieldArray({
     name: "images",
@@ -14,8 +13,7 @@ const ImageEditor = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => {
     return { remove() { remove(); } }
-  }, [])
-
+  }, []);
 
   const handleFileChange = async (event: FormEvent<HTMLInputElement>) => {
     const selectedFiles = event.currentTarget.files;
@@ -86,5 +84,7 @@ const ImageEditor = forwardRef((props, ref) => {
     </div>
   )
 })
+
+ImageEditor.displayName = "ImageEditor";
 
 export default ImageEditor;

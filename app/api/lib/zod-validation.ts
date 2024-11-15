@@ -66,5 +66,19 @@ export const validatePicture = z.object({
   height: z.number().nullable(),
   width: z.number().nullable(),
   url: z.string(),
-  isPrimary: z.boolean().nullable(),
+  order: z.string().nullable()
+})
+
+export const validateWebInfo = z.object({
+  name: z.string(),
+  category: z.string().nullable(),
+  title: z.string().array(),
+  content: z.string().array(),
+})
+
+export const validateNavbarItem = z.object({
+  title: z.string(),
+  details: z.string().optional(),
+  link: z.string(),
+  order: z.string().optional(),
 })

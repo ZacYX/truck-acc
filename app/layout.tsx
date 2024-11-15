@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/NavBar";
-import MessageBar from "./components/MessageBar";
-import Footer from "./components/Footer";
+import NavBar from "./NavBar";
+import MessageBar from "./MessageBar";
+import Footer from "./Footer";
 import { SessionProvider } from "next-auth/react";
-import SessionContextProvider from "./SessionContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +18,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <SessionProvider>
       <html lang="en">
@@ -34,5 +34,5 @@ export default function RootLayout({
         </body>
       </html>
     </SessionProvider>
-  );
+  )
 }

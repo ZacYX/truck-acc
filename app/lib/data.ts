@@ -12,265 +12,153 @@ export const permissionListTitle = ["id", "title", "details", "roles.title"]
 export const productListTitle = ["id", "sku", "name"]
 export const postListTitle = ["id", "title",]
 
-const navItems = [
-  { title: "Contact", link: "/contact" },
-  { title: "Blog", link: "/blog" },
+export const navItems = [
+  { title: "Tonneau Cover", link: "/shop/cover" },
+  { title: "Bed Rack", link: "/shop/rack" },
   { title: "About us", link: "/aboutus" },
 ];
 
-const menuItem: { title: string, icon: IconType, link: string, categories: { title: String, link: String }[] } = {
-  title: "Shop",
+export const menuItem: {
+  title: string,
+  icon: IconType,
+  link: string,
+} = {
+  title: "All Products",
   icon: CiMenuBurger,
   link: "/shop/all",
-  categories: [
-    { title: "RoofTop Tent", link: "/shop/rooftop-tent" },
-    { title: "Truck Topper", link: "/shop/truck-topper" },
-    { title: "Truck Rack", link: "/shop/truck-rack" },
+};
+
+export const firstData = {
+  name: "first",
+  category: "home",
+  title: ["BEST VALUE", "FOR", "MONEY"],
+  images: [
+    {
+      alt: "grassland tent family lake",
+      url: "/images/cloud-tent-family-s.jpg",
+      width: 2400,
+      height: 1800,
+    }
+  ]
+}
+
+export const secondData = {
+  name: "second",
+  category: "home",
+  title: ["Good Prices, Good Quality"],
+  content: ["Here we make it our duty to be the most affordable option on the market and offer you more! You’re guaranteed to get your money’s worth. If you find it's not in Canada with equivalent options, we’ll match it."],
+  images: [
+    {
+      alt: "night tent stars torch",
+      url: "/images/night-tent-man-s.jpg",
+      width: 2400,
+      height: 1600,
+    }
+  ]
+}
+
+export const thirdData = {
+  name: "third",
+  category: "home",
+  title: ["Environment Canada issued a heavy"],
+  content: ["Here we make it our duty to be the most affordable option on the market and offer you more! You’re guaranteed to get your money’s worth. If you find it's not in Canada with equivalent options, we’ll match it."],
+}
+
+export const fourthData = {
+  name: "fourth",
+  category: "home",
+  title: ["Why This Topper"],
+  images: [
+    {
+      alt: "night tent stars torch",
+      url: "/images/night-tree-tent-s.jpg",
+      width: 2400,
+      height: 3600,
+    }
+  ]
+}
+
+export const fourthCardsData = {
+  name: "cards",
+  category: "homeFourth",
+  title: ["Envi Canada issued", "Environment issue", "Environment solution"],
+  content: ["After winning the U.S. election this week, Mr. Trump will be impatient to make the tax cuts implemented during his first administration permanent, while lifting regulations in the financial, energy and technology sectors. That will boost corporate profits and provide a further injection of stimulus to the economy.",
+    "After winning the U.S. election this week, Mr. Trump will be impatient to make the tax cuts implemented during his first administration permanent, while lifting regulations in the financial, energy and technology sectors. That will boost corporate profits and provide a further injection of stimulus to the economy.",
+    "After winning the U.S. election this week, Mr. Trump will be impatient to make the tax cuts implemented during his first administration permanent, while lifting regulations in the financial, energy and technology sectors. That will boost corporate profits and provide a further injection of stimulus to the economy.",
+  ],
+  images: [
+    {
+      url: GoBook,
+    },
+    {
+      url: TbPigMoney,
+    },
+    {
+      url: FiTruck,
+    }
   ]
 };
 
-const night = {
-  title: "Good Prices, Good Quality",
-  content: "Here we make it our duty to be the most affordable option on the market and offer you more! You’re guaranteed to get your money’s worth. If you find it's not in Canada with equivalent options, we’ll match it.",
-};
-
-const green = {
-  title: "Environment Canada issued a heavy ",
-  context: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 centimetres is expected, although some areas west of Edmonton may",
-};
-
-const cards: { icon: IconType, title: string, content: string }[] = [
-  {
-    icon: GoBook,
-    title: "Envi Canada issued",
-    content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 centimetres is expected, although some areas west of Edmonton may",
-  },
-  {
-    icon: TbPigMoney,
-    title: "Environment issued ",
-    content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 ",
-  },
-  {
-    icon: FiTruck,
-    title: "Environment Canada ",
-    content: "Environment Canada issued a heavy snowfall warning for the Edmonton area Saturday.  According to the agency, heavy snowfall is expected to start in Edmonton, St. Albert and Sherwood Park on Sunday.  Between 10 and 20 centimetres is expected, although ",
-  },
-];
-
-const showCasePictures: Picture[] = [
-  {
-    id: 0,
-    name: "topper",
-    width: 1336,
-    height: 819,
-    url: "/images/topper.jpg",
-    productId: null
-  },
-  {
-    id: 1,
-    name: "rooftop-topper",
-    width: 800,
-    height: 600,
-    url: "/images/rooftop-topper.jpg",
-    productId: null
-  },
-  {
-    id: 2,
-    name: "rack-truck",
-    width: 530,
-    height: 530,
-    url: "/images/rack-truck.jpg",
-    productId: null
-  },
-]
-
-const showCases: { index: number, title: string, content: string, picture: Picture }[] = [
-  {
-    index: 0,
-    title: "Truck Toppers",
-    content: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    picture: showCasePictures[0],
-  },
-  {
-    index: 1,
-    title: "Rooftop Tents",
-    content: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    picture: showCasePictures[1],
-  },
-  {
-    index: 2,
-    title: "Truck Racks",
-    content: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    picture: showCasePictures[2],
-  },
-]
-
-
-// enum ProductCategory {
-//   ROOTTOP_TENT,
-//   TRUCK_TOPPER,
-//   TRUCK_RACK,
-// }
-
-const productCategory: Category = {
-  id: 1,
-  name: "retrackable",
-  details: "retrackable roll up toneau cover",
+export const fifthData = {
+  name: "fifth",
+  category: "home",
+  title: ["Truck Toppers", "Rooftop Tent", "Truck rack"],
+  content: [
+    "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+    "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+  ],
+  images: [
+    {
+      alt: "topper",
+      width: 1336,
+      height: 819,
+      url: "/images/topper.jpg",
+    },
+    {
+      name: "rooftop-topper",
+      width: 800,
+      height: 600,
+      url: "/images/rooftop-topper.jpg",
+    },
+    {
+      name: "rack-truck",
+      width: 530,
+      height: 530,
+      url: "/images/rack-truck.jpg",
+    },
+  ]
 }
 
-//TBD
-type extProduct = Product & {
-  pictures: Picture[],
+export const shopData = {
+  name: "shop",
+  category: "shop",
+  images: [
+    {
+      alt: "sun tent",
+      url: "/images/sun-tent-s.jpg",
+      width: 2400,
+      height: 1800,
+    }
+  ]
 }
 
-const carouselImages: Picture[] = [
-  {
-    id: 1,
-    name: "cloud-tent-family-s",
-    url: "/images/cloud-tent-family-s.jpg",
-    width: 2400,
-    height: 1800,
-    productId: 0,
-  },
-  {
-    id: 2,
-    name: "desert-tent-man-s",
-    url: "/images/desert-tent-man-s.jpg",
-    width: 2400,
-    height: 1600,
-    productId: 0,
-
-  },
-  {
-    id: 3,
-    name: "mountain-tent-foot-s",
-    url: "/images/mountain-tent-foot-s.jpg",
-    width: 2400,
-    height: 1600,
-    productId: 0,
-  },
-  {
-    id: 4,
-    name: "night-tent-man-s",
-    url: "/images/night-tent-man-s.jpg",
-    width: 2400,
-    height: 1600,
-    productId: 0,
-  },
-  {
-    id: 5,
-    name: "sun-tent-s",
-    url: "/images/sun-tent-s.jpg",
-    width: 2400,
-    height: 1800,
-    productId: 0,
-  },
-  {
-    id: 6,
-    name: "tree-rooftop-suv-s",
-    url: "/images/tree-rooftop-suv-s.jpg",
-    width: 2400,
-    height: 1350,
-    productId: 0,
-  },
-  {
-    id: 7,
-    name: "tree-tent-fire-s",
-    url: "/images/tree-tent-fire-s.jpg",
-    width: 2400,
-    height: 1600,
-    productId: 0,
-  },
-  {
-    id: 8,
-    name: "night-tree-tent-s",
-    url: "/images/night-tree-tent-s.jpg",
-    width: 2400,
-    height: 3600,
-    productId: 0,
-  },
-]
-
-const products: extProduct[] = [
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-  {
-    id: 1,
-    sku: "0001",
-    name: "Rooftop tent 1",
-    details: "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
-    quantity: 100,
-    price: 3000,
-    size: "small",
-    color: "red",
-    pictures: carouselImages,
-  },
-
-]
+export const aboutUs = {
+  name: "aboutus",
+  category: "about-us",
+  title: ["We are waiting for you"],
+  content: [
+    "REGINA — Saskatchewan Opposition NDP Leader Carla Beck says she wants to prove her party “is a government in waiting” as she heads into the incoming legislative session.  Beck held her first caucus meeting on Friday with 27 members, nearly double what she had before the Oct. 28 election but short of the 31 required to form a majority in the 61-seat legislature.  She said her priorities will be health care and cost- of - living issues.",
+  ],
+  images: [
+    {
+      alt: "night tent stars torch",
+      url: "/images/mountain-tent-foot-s.jpg",
+      width: 2400,
+      height: 1600,
+    }
+  ]
+}
 
 
-export { navItems, menuItem, night, green, cards, showCases, products, carouselImages, };
+

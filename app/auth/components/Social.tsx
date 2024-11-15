@@ -23,7 +23,7 @@ export default function Social() {
     if (errorCode) {
       setMessage!({ error: errorCode });
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <div className="flex flex-row justify-between w-full gap-x-2">

@@ -5,7 +5,7 @@ import { MessageContext } from "./CardWrapper";
 import { verifyEmail } from "./actions/verify-email";
 import { useSearchParams } from "next/navigation";
 
-export default function verifyForm() {
+export default function VerifyForm() {
   const { message, setMessage } = useContext(MessageContext);
   const searchParams = useSearchParams();
   const token = searchParams.get("token");

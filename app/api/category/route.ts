@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const take = Number.parseInt(req.nextUrl.searchParams.get("page-size") ?? "10");
+    const take = Number.parseInt(req.nextUrl.searchParams.get("page-size") ?? "20");
     const skip = (Number.parseInt(req.nextUrl.searchParams.get("page") ?? "1") - 1) * take;
     if (req.nextUrl.searchParams?.has("count")) {
       const param = req.nextUrl.searchParams.get("count") ?? undefined;

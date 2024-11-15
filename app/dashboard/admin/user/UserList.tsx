@@ -6,7 +6,7 @@ import Search from "../Search"
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { useConfirm } from "@/app/hook/confirm";
-import ConfirmModal from "@/app/components/ConfirmModal";
+import ConfirmModal from "@/app/dashboard/ConfirmModal";
 
 const ListItems = [
   "ID",

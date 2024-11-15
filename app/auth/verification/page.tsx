@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react";
 import CardWrapper from "../components/CardWrapper";
 import VerifyForm from "../components/VerifyForm";
 
@@ -13,7 +14,9 @@ export default function VerifyEmailPage() {
         backButtonLabel="Back to login"
         backButtonHref="/auth/login"
         showSocial={false} >
-        <VerifyForm />
+        <Suspense>
+          <VerifyForm />
+        </Suspense>
       </CardWrapper>
     </div>
   )

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import CardWrapper from "../components/CardWrapper";
 import NewPasswordForm from "../components/NewPasswordForm";
 
@@ -9,7 +10,9 @@ export default function NewPasswordPage() {
         backButtonLabel="Go back to login"
         backButtonHref="/auth/login"
       >
-        <NewPasswordForm />
+        <Suspense>
+          <NewPasswordForm />
+        </Suspense>
       </CardWrapper>
     </div>
   )

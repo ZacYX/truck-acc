@@ -3,11 +3,11 @@
 import { ReactNode, useEffect, useState } from "react"
 import Pagination from "../Pagination"
 import Search from "../Search"
-import { Product, User } from "@prisma/client";
+import { Product } from "@prisma/client";
 import Link from "next/link";
 import { VscNewFile } from "react-icons/vsc";
 import { useConfirm } from "@/app/hook/confirm";
-import ConfirmModal from "@/app/components/ConfirmModal";
+import ConfirmModal from "@/app/dashboard/ConfirmModal";
 
 const ListItems = [
   "id",
@@ -74,7 +74,7 @@ export default function ProductList() {
   }, [currentPage, pageSize])
 
   return (
-    <div className="">
+    <div className="flex flex-col">
       <div className="border-b-2 py-2 mb-8 flex flex-row justify-between items-center">
         <div className="flex flex-row">
           <h2 className="pr-2 font-semibold rounded-md">Product</h2>
@@ -85,7 +85,8 @@ export default function ProductList() {
         <Search className="h-8" />
       </div>
       {/* Table header */}
-      <div className={`grid grid-cols-${ListItems.length}  `}>
+      <div className={`grid ${`grid-cols-${ListItems.length}`}  `}>
+        {/* <div className={`grid grid-cols-6  `}> */}
         {ListItems.map((item, index) => (
           <div key={index}
             className="border-1 flex flex-row justify-center">

@@ -132,6 +132,10 @@ export async function findProductBySku(params: string) {
       where: {
         sku: params,
       },
+      include: {
+        categories: true,
+        images: true,
+      }
     });
     return result;
   } catch (error) {
@@ -155,6 +159,10 @@ export async function findProductByName(skip: number, take: number, productName:
           mode: "insensitive",
         }
       },
+      include: {
+        categories: true,
+        images: true,
+      }
     });
     return result;
   } catch (error) {
@@ -172,6 +180,16 @@ export async function findAllProduct(skip: number, take: number) {
     const result = await prisma.product.findMany({
       skip: skip,
       take: take,
+      include: {
+        categories: true,
+        images: true,
+        //sorting in relation fields does not work
+        // images: {
+        //   orderBy: {
+        //     order: 'asc',
+        //   },
+        // }
+      }
     });
     return result;
   } catch (error) {

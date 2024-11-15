@@ -53,6 +53,14 @@ export async function findAllCategory(skip: number, take: number) {
     const result = await prisma.category.findMany({
       skip: skip,
       take: take,
+      orderBy: [
+        {
+          order: 'asc',
+        },
+        {
+          name: 'asc',
+        }
+      ]
     });
     return result;
   } catch (error) {

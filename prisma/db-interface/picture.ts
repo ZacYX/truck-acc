@@ -41,16 +41,17 @@ export async function createPictures(pictures: PictureWithoutId[]) {
 
 export async function updatePicture(picture: Picture) {
   try {
-    if (!picture.id) {
+    const { id, ...data } = picture;
+    if (!id) {
       console.debug("No id to update picture");
       return;
     }
     const result = await prisma.picture.update({
       where: {
-        id: picture.id,
+        id: id,
       },
       data: {
-        ...picture,
+        ...data,
       }
     });
     return result;

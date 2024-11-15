@@ -1,4 +1,4 @@
-import ConfirmModal from "@/app/components/ConfirmModal";
+import ConfirmModal from "@/app/dashboard/ConfirmModal";
 import { useConfirm } from "@/app/hook/confirm";
 import { Category } from "@prisma/client";
 import { FormEvent } from "react";
@@ -78,7 +78,7 @@ export default function NewCategoryForms({ categories, setCategories }: {
           <li key={category.id} >
             <form
               onSubmit={formSubmitHandler}
-              className="grid grid-cols-6 "
+              className="grid grid-cols-7 "
             >
               {
                 Object.entries(category).map((entry, index) => (

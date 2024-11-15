@@ -10,6 +10,7 @@ export const ListItems = [
   "id",
   "name",
   "details",
+  "order"
 ]
 
 const DEFAULT_CURRENT_PAGE = 1;
@@ -68,7 +69,7 @@ export default function CategoryList() {
         <h2 className="font-semibold">Category</h2>
       </div>
       {/* header */}
-      <div className="grid grid-cols-6 ">
+      <div className="grid grid-cols-7 ">
         {
           ListItems.map((item, index) => (
             <div

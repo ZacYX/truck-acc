@@ -10,6 +10,7 @@
     "prepare": "ts-patch install && typia patch"
   },
   "dependencies": {
+    "@auth/core": "^0.37.3",
     "@auth/prisma-adapter": "^2.5.0",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/button": "^2.0.37",
@@ -64,5 +65,8 @@
     "ts-node": "^10.9.2",
     "ts-patch": "^3.1.2",
     "typescript": "^5.4.2"
+  },
+  "overrides": {
+    "@auth/prisma-adapter/@auth/core": "2.5.0"
   }
 }

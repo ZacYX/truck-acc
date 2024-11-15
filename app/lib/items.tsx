@@ -1,11 +1,9 @@
 
-import { ReactElement } from "react";
 import { FaProductHunt, FaUserCircle, FaRegAddressCard } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { ImUserMinus } from "react-icons/im";
-import { FaHandPaper } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { MdCategory } from "react-icons/md";
+import { CgWebsite } from "react-icons/cg";
+import { LiaSitemapSolid } from "react-icons/lia";
 import { SideBarSectionItem } from "../dashboard/SideBarSection";
 
 export const settingsSectionItems: SideBarSectionItem[] = [
@@ -16,7 +14,7 @@ export const settingsSectionItems: SideBarSectionItem[] = [
   }
 ]
 
-export const adminSectionItems: SideBarSectionItem[] = [
+export const dataAdminSectionItems: SideBarSectionItem[] = [
   {
     name: "User",
     icon: <FaUserCircle />,
@@ -32,19 +30,17 @@ export const adminSectionItems: SideBarSectionItem[] = [
     icon: <MdCategory />,
     path: "/dashboard/admin/category",
   },
-  // {
-  //   name: "Role",
-  //   icon: < ImUserMinus />,
-  //   path: "/dashboard/admin/role",
-  // },
-  // {
-  //   name: "Permission",
-  //   icon: <FaHandPaper />,
-  //   path: "/dashboard/admin/permission",
-  // },
-  // {
-  //   name: "Post",
-  //   icon: <FaRegAddressCard />,
-  //   path: "/dashboard/admin/post",
-  // },
+]
+
+export const websiteAdminSectionItems: SideBarSectionItem[] = [
+  {
+    name: "Webpage",
+    icon: <CgWebsite />,
+    path: "/dashboard/admin/website",
+  },
+  {
+    name: "Navbar",
+    icon: <LiaSitemapSolid />,
+    path: "/dashboard/admin/navbar",
+  },
 ]

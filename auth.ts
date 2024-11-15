@@ -1,4 +1,5 @@
-import NextAuth from "next-auth"
+import { Adapter } from "next-auth/adapters";
+import NextAuth from "next-auth";
 import authConfig from "./auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/prisma/db-interface/prisma-singleton";
@@ -7,7 +8,7 @@ import { UserRole } from "@prisma/client";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",

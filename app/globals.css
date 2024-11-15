@@ -17,7 +17,7 @@
   }
 
   .content-box {
-    @apply w-full flex justify-center items-center page-padding max-content-w py-16; 
+    @apply w-full flex justify-center items-center page-padding py-16; 
   }
 
   .product-box {

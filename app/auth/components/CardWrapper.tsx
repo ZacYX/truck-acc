@@ -5,7 +5,7 @@ import Header from "./Header";
 import { Card, CardFooter, CardHeader, CardBody } from "@nextui-org/card";
 import Social from "./Social";
 import BackButton from "./BackButton";
-import { createContext, useState } from "react";
+import { createContext, Suspense, useState } from "react";
 
 
 type CardWrapperProps = {
@@ -49,7 +49,9 @@ export default function CardWrapper({
         </CardBody>
         {showSocial && (
           <CardFooter>
-            <Social />
+            <Suspense>
+              <Social />
+            </Suspense>
           </CardFooter>
         )}
         <BackButton

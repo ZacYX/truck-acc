@@ -4,7 +4,7 @@ import Avatar from "./Avatar";
 import LogoutButton from "../auth/components/LogoutButton";
 
 import SideBarSection from "./SideBarSection";
-import { adminSectionItems, settingsSectionItems } from "../lib/items";
+import { dataAdminSectionItems, settingsSectionItems, websiteAdminSectionItems } from "../lib/items";
 import { User, UserRole } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useCurrentUser } from "../hook/session";
@@ -36,7 +36,10 @@ export default function SideBar() {
       <div className="w-full py-2">
         <SideBarSection name="Settings" items={settingsSectionItems} />
         {role === UserRole.ADMIN &&
-          <SideBarSection name="Admin" items={adminSectionItems} />
+          <SideBarSection name="Data" items={dataAdminSectionItems} />
+        }
+        {role === UserRole.ADMIN &&
+          <SideBarSection name="Website" items={websiteAdminSectionItems} />
         }
         <div className="min-w-20 py-2 hover:bg-zinc-200 transition-all border-t-2">
           <LogoutButton >

@@ -43,7 +43,7 @@ export default function NewCategoryForm({ categories, setCategories }:
   return (
     < form
       onSubmit={newCategoryHandler}
-      className="grid grid-cols-6 " >
+      className="grid grid-cols-7 " >
       {
         ListItems.map((item, index) => (
           <div
