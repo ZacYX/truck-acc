@@ -65,8 +65,5 @@
     "ts-node": "^10.9.2",
     "ts-patch": "^3.1.2",
     "typescript": "^5.4.2"
-  },
-  "overrides": {
-    "@auth/prisma-adapter/@auth/core": "2.5.0"
   }
 }
