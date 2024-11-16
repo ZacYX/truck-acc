@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "ts-patch install && typia patch"
+    "prepare": "ts-patch install && typia patch",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/core": "^0.37.3",
