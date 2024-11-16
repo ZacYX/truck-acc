@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateCategory } from "../lib/zod-validation";
-import { createCategory, deleteCategoryById, findAllCategory, getCategoryCount, updateCategory } from "@/prisma/db-interface/category";
+import {
+  createCategory,
+  deleteCategoryById,
+  findAllCategory,
+  getCategoryCount,
+  updateCategory
+} from "@/prisma/db-interface/category";
 
 export async function POST(req: NextRequest) {
   try {
