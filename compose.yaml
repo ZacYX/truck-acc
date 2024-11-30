@@ -15,7 +15,7 @@ services:
     #without following command container will not start correctly
     command: ["npm", "run", "start"]
     ports:
-      - 80:3000
+      - 3000:3000
     environment:
       NODE_ENV: production
       # env set below does not work, use entrypoint sh instead
@@ -25,9 +25,20 @@ services:
     # env_file: ".env"
     secrets:
       - db_url
+      - google_id
+      - google_secret
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app
 secrets:
   db_url:
     file: ./secret/database_url.txt
+  google_id:
+    file: ./secret/google_id.txt
+  google_secret:
+    file: ./secret/google_secret.txt
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the

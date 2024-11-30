@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 export default {
   providers: [
     Google,
-    Github,
+    // Github,
     Credentials({
       // credentials: {
       //   email: {},
