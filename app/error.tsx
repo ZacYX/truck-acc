@@ -1,5 +1,6 @@
 'use client' // Error components must be Client Components
 
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function Error({
@@ -9,6 +10,7 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const errorPath = usePathname();
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error)
@@ -16,8 +18,9 @@ export default function Error({
 
   return (
     <div>
-      <h2>Something went wrong when reading the dynamic route</h2>
-      <p>error file in dashboard </p>
+      <h2>Something went wrong </h2>
+      <p>error file in {errorPath} </p>
+      <p>error message: {error.message}</p>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
