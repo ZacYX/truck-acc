@@ -15,7 +15,7 @@ services:
     #without following command container will not start correctly
     command: ["npm", "run", "start"]
     ports:
-      - 80:3000
+      - 3000:3000
     environment:
       NODE_ENV: production
       # env set below does not work, use entrypoint sh instead
