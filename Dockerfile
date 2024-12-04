@@ -23,7 +23,7 @@ COPY . .
 # COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
 
-ENV RESEND_API_KEY=dummy_key
+# ENV RESEND_API_KEY=dummy_key
 
 # Step 6: Build the project
 RUN npm run build

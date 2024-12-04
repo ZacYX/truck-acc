@@ -40,7 +40,7 @@ export async function resetPassword(values: z.infer<typeof resetPasswordSchema>)
     const resetLink = `${API_URL}/auth/new-password?token=${generatedToken}`;
     const emailContent = `<p>Click <a href=${resetLink}>here</a> to reset your email</p>`;
     const emailParcel = {
-      from: "onboarding@resend.dev",
+      from: "noreply@mail.goxmore.com",
       to: email,
       subject: "Reset your email",
       html: emailContent,
