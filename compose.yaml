@@ -21,12 +21,13 @@ services:
       # env set below does not work, use entrypoint sh instead
       # DATABASE_URL: /run/secrets/db_url
     env_file: 
-      - .env
+      - .env.production
     # env_file: ".env"
     secrets:
       - db_url
       - google_id
       - google_secret
+      - resend_api_key
     develop:
       watch:
         - action: sync
@@ -39,6 +40,8 @@ secrets:
     file: ./secret/google_id.txt
   google_secret:
     file: ./secret/google_secret.txt
+  resend_api_key:
+    file: ./secret/resend_api_key.txt
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the

@@ -58,7 +58,7 @@ export async function registerUser(values: z.infer<typeof registerSchema>) {
     const confirmLink = `${API_URL}/auth/verification?token=${generateTokenResult}`;
     const emailContent = `<p>Click <a href=${confirmLink}>here</a> to confirm your email!</p>`;
     const emailParcel = {
-      from: "onboarding@resend.dev",
+      from: "noreply@mail.goxmore.com",
       to: email,
       subject: "Confirm your email",
       html: emailContent,
