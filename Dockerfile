@@ -10,8 +10,8 @@ COPY package*.json ./
 # Copy the Prisma schema file explicitly to make it available
 COPY prisma ./prisma
 
-# Step 4: Install dependencies
-RUN npm install --ignore-scripts
+# Step 4: Install dependencies --ignore-script: do not run prepare and postinstall
+RUN npm install --ignore-scripts  
 # RUN npm run prepare && npm run postinstall
 RUN  npm run postinstall
 RUN npm install -g typescript ts-patch typia 

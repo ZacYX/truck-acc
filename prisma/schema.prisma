@@ -17,8 +17,6 @@ datasource db {
 enum UserRole {
   ADMIN
   USER
-
-  @@map("user_role")
 }
 
 model User {
@@ -31,8 +29,6 @@ model User {
   role          UserRole  @default(USER)
   accounts      Account[]
   reviews       Review[]
-
-  @@map("user")
 }
 
 model Account {
@@ -52,7 +48,6 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map("account")
 }
 
 model VerificationToken {
@@ -62,7 +57,6 @@ model VerificationToken {
   expires DateTime
 
   @@unique([email, token])
-  @@map("verification_token")
 }
 
 model Address {
@@ -73,8 +67,6 @@ model Address {
   province String?
   country  String  @default("Canada")
   zip      String?
-
-  @@map("address")
 }
 
 model Post {
@@ -83,8 +75,6 @@ model Post {
   content  String?
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
-
-  @@map("post")
 }
 
 model Product {
@@ -101,8 +91,6 @@ model Product {
   images     Picture[]
   categories Category[]
   reviews    Review[]
-
-  @@map("product")
 }
 
 model Picture {
@@ -115,8 +103,6 @@ model Picture {
   Product   Product? @relation(fields: [productId], references: [id])
   productId Int?
   createAt  DateTime @default(now())
-
-  @@map("picture")
 }
 
 model Category {
@@ -125,8 +111,6 @@ model Category {
   details  String?
   order    String?
   products Product[]
-
-  @@map("category")
 }
 
 model Review {
@@ -138,8 +122,6 @@ model Review {
   createAt  DateTime @default(now())
   Product   Product  @relation(fields: [productId], references: [id])
   User      User     @relation(fields: [userId], references: [id])
-
-  @@map("review")
 }
 
 model WebInfo {
@@ -151,8 +133,6 @@ model WebInfo {
   images   WebPicture[]
   createAt DateTime     @default(now())
   updateAt DateTime     @updatedAt
-
-  @@map("web_info")
 }
 
 model WebPicture {
@@ -165,8 +145,6 @@ model WebPicture {
   createAt  DateTime @default(now())
   WebInfo   WebInfo? @relation(fields: [webInfoId], references: [id])
   webInfoId Int?
-
-  @@map("web_picture")
 }
 
 model NavbarItem {
@@ -175,6 +153,4 @@ model NavbarItem {
   details String?
   link    String
   order   String?
-
-  @@map("navbar_item")
 }
