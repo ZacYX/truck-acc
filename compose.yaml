@@ -33,6 +33,13 @@ services:
         - action: sync
           path: ./
           target: /app
+    networks:
+      - docker-network
+            
+networks:
+  docker-network:
+    external: true
+
 secrets:
   db_url:
     file: ./secret/database_url.txt

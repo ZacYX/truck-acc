@@ -6,5 +6,7 @@ export AUTH_GOOGLE_ID=$(cat /run/secrets/google_id)
 export AUTH_GOOGLE_SECRET=$(cat /run/secrets/google_secret)
 export RESEND_API_KEY=$(cat /run/secrets/resend_api_key)
 
+echo ${DATABASE_URL}
+
 # Start the application
 exec "$@"
