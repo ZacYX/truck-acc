@@ -1,5 +1,5 @@
 # Step 1: Use an official Node.js image as the base image
-FROM node:23-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Step 2: Set working directory inside the container
 WORKDIR /app
@@ -29,7 +29,7 @@ RUN chmod +x /app/docker-entrypoint.sh
 RUN npm run build
 
 # Step 7: Use a smaller base image for the final container
-FROM node:23-alpine AS runner
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 
@@ -41,6 +41,7 @@ ENV NODE_ENV=production
 
 # Step 9: Install production dependencies (optional but recommended)
 RUN npm install --only=production 
+RUN apk add --no-cache openssl
 
 # Step 10: Expose the port the app will run on
 EXPOSE 3000
