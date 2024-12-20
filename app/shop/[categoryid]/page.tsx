@@ -12,9 +12,10 @@ export type ExtProduct = Product & {
 export default function ProductsByCategoryPage({ params }: {
   params: { categoryid: string }
 }) {
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<ExtProduct[]>();
 
-  const url = `/api/product?${params.categoryid === "all" ? "" : `category=${params.categoryid}`}`;
+  const url = `${NEXT_PUBLIC_API_URL}/api/product?${params.categoryid === "all" ? "" : `category=${params.categoryid}`}`;
   const productsResult = useMemo(async () => {
     const productsResponse = await fetch(url);
     console.debug(`fetching products`);

@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Category, Picture, Product } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { image } from "@nextui-org/theme"
 
 export default function ProductCard({ product }: {
   product: Product & {
@@ -10,19 +9,29 @@ export default function ProductCard({ product }: {
     images: Picture[]
   }
 }) {
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const { id, name, sku, price, salePrice, categories, images } = product;
-  const [imagesToShow, setImagesToShow] = useState(images);
+  const [imageToShow, setImageToShow] = useState<Picture>();
 
   useEffect(() => {
-    if (images.length > 1) {
-      const sortedImages = images.toSorted((a, b) => {
-        if (!a.order || a.order === undefined) return 1;
-        if (!b.order || b.order === undefined) return -1;
-        return a.order.localeCompare(b.order);
-      });
-      setImagesToShow(sortedImages);
+    const getImageToShow = async () => {
+      if (images.length > 1) {
+        const sortedImages = images.toSorted((a, b) => {
+          if (!a.order || a.order === undefined) return 1;
+          if (!b.order || b.order === undefined) return -1;
+          return a.order.localeCompare(b.order);
+        });
+        const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/upload?name=${sortedImages[0].url}`);
+        const presignedUrl = await response.json();
+        setImageToShow({
+          ...sortedImages[0],
+          url: presignedUrl
+        });
+      }
     }
-  }, [])
+    getImageToShow();
+  }, [images])
 
   return (
     <div className="min-w-48 flex flex-col justify-between items-center gap-4 bg-zinc-100 p-2 rounded-md">
@@ -31,13 +40,14 @@ export default function ProductCard({ product }: {
         className="h-full flex flex-col items-center gap-2"
       >
         <div className="w-full h-full flex justify-center items-center">
-          <Image
-            src={imagesToShow[0].url}
-            width={imagesToShow[0].width ?? 200}
-            height={imagesToShow[0].height ?? 200}
-            alt={imagesToShow[0].alt ?? ""}
-            className="hover:opacity-50 "
-          />
+          {imageToShow &&
+            <Image
+              src={imageToShow.url}
+              width={imageToShow.width ?? 200}
+              height={imageToShow.height ?? 200}
+              alt={imageToShow.alt ?? ""}
+              className="hover:opacity-50 "
+            />}
         </div>
         <p className="pb-1 hover:underline">{name}</p>
         <p className="pb-1 hover:underline">Price: {price} $CND</p>

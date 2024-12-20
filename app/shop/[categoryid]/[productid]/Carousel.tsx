@@ -10,18 +10,33 @@ export default function Carousel({ isLandscape = true, images }: {
   isLandscape?: boolean,
   images: Picture[]
 }) {
-  const [imagesToShow, setImagesToShow] = useState(images);
+  const [imagesToShow, setImagesToShow] = useState<Picture[]>();
 
   useEffect(() => {
-    if (images.length > 1) {
-      const sortedImages = images.toSorted((a, b) => {
-        if (!a.order || a.order === undefined) return 1;
-        if (!b.order || b.order === undefined) return -1;
-        return a.order.localeCompare(b.order);
-      });
-      setImagesToShow(sortedImages);
+    const getImagesToShow = async () => {
+      let sortedImages;
+      if (images.length > 1) {
+        sortedImages = images.toSorted((a, b) => {
+          if (!a.order || a.order === undefined) return 1;
+          if (!b.order || b.order === undefined) return -1;
+          return a.order.localeCompare(b.order);
+        });
+      } else {
+        sortedImages = images;
+      }
+      const sotedImagesWithPresignedUrl = await Promise.all(
+        sortedImages.map(async (item) => {
+          const response = await fetch(`/api/upload?name=${item.url}`);
+          const presignedUrl = await response.json();
+          return ({
+            ...item,
+            url: presignedUrl,
+          })
+        }))
+      setImagesToShow(sotedImagesWithPresignedUrl);
     }
-  }, [])
+    getImagesToShow();
+  }, [images])
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -48,6 +63,9 @@ export default function Carousel({ isLandscape = true, images }: {
   }
 
   const handlePopupAction = (e: React.MouseEvent, action: string) => {
+    if (!imagesToShow || !imagesToShow?.length) {
+      return
+    }
     switch (action) {
       case "close": {
         setShowPopup(false);
@@ -100,7 +118,7 @@ export default function Carousel({ isLandscape = true, images }: {
           ref={scrollRef}
           className={`w-full h-full flex gap-4 overflow-scroll scrollbar-none ${isLandscape ? "flex-col" : "flex-row"}`}
         >
-          {imagesToShow.map((item, index) => (
+          {imagesToShow?.map((item, index) => (
             <Image
               key={index} src={item.url} alt={item.alt || ""} width={item.width ?? 400} height={item.height ?? 400}
               className={`hover:opacity-35 hover:cursor-pointer aspect-auto object-cover object-center ${isLandscape ? "w-full" : "h-full "}`}
@@ -127,17 +145,21 @@ export default function Carousel({ isLandscape = true, images }: {
       </div>
       {/* Carousel slides */}
       <div className={`${isLandscape ? "w-4/5 h-full" : "w-full h-4/5"} `}>
-        <Image
-          src={imagesToShow[currentImageIndex].url}
-          alt={imagesToShow[currentImageIndex].alt ?? ""}
-          width={imagesToShow[currentImageIndex].width ?? 400}
-          height={imagesToShow[currentImageIndex].height ?? 400}
-          className="w-full h-full object-center object-contain hover:cursor-zoom-in"
-          onClick={() => setShowPopup(true)}
-        />
+        {imagesToShow &&
+          <Image
+            src={imagesToShow[currentImageIndex].url}
+            alt={imagesToShow[currentImageIndex].alt ?? ""}
+            width={imagesToShow[currentImageIndex].width ?? 400}
+            height={imagesToShow[currentImageIndex].height ?? 400}
+            className="w-full h-full object-center object-contain hover:cursor-zoom-in"
+            onClick={() => setShowPopup(true)}
+          />
+
+        }
       </div>
       {
         showPopup &&
+        imagesToShow &&
         <PopupImage
           imageList={imagesToShow}
           imageIndex={currentImageIndex}

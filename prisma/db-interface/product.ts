@@ -175,6 +175,34 @@ export async function findProductByName(skip: number, take: number, productName:
   }
 }
 
+export async function findProductByCategory(skip: number, take: number, category: string) {
+  try {
+    const result = await prisma.product.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        categories: {
+          some: {
+            id: parseInt(category),
+          },
+        },
+      },
+      include: {
+        categories: true,
+        images: true,
+      }
+    });
+    return result;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(`error name: ${error.name} error message: ${error.message}`);
+    } else {
+      console.log("Read database error")
+    }
+    throw error;
+  }
+}
+
 export async function findAllProduct(skip: number, take: number) {
   try {
     const result = await prisma.product.findMany({

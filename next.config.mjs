@@ -14,6 +14,10 @@ const nextConfig = {
       // },
       {
         protocol: 'https',
+        hostname: 'minioapi.goxmore.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
       },
     ],

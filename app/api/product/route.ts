@@ -6,6 +6,7 @@ import {
   findProductById,
   findProductBySku,
   findProductByName,
+  findProductByCategory,
   findAllProduct,
   deleteProductById,
   updateProduct,
@@ -135,6 +136,12 @@ export async function GET(req: NextRequest) {
     const name = req.nextUrl.searchParams.get("keyword");
     if (name) {
       const result = await findProductByName(skip, take, name);
+      return NextResponse.json(result, { status: 200 });
+    }
+
+    const category = req.nextUrl.searchParams.get("category");
+    if (category) {
+      const result = await findProductByCategory(skip, take, category);
       return NextResponse.json(result, { status: 200 });
     }
 

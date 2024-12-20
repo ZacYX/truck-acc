@@ -9,15 +9,18 @@
 # https://github.com/docker/awesome-compose
 services:
   frontend:
+    container_name: ta
     build:
       context: .
     entrypoint: ["/app/docker-entrypoint.sh"]
     #without following command container will not start correctly
+    # command: ["npm", "run", "dev"]   #use this for development: docker compose watch
     command: ["npm", "run", "start"]
     ports:
       - 3000:3000
     environment:
       NODE_ENV: production
+      # NODE_ENV: development   #use this for development: docker compose watch
       # env set below does not work, use entrypoint sh instead
       # DATABASE_URL: /run/secrets/db_url
     env_file: 
@@ -28,6 +31,8 @@ services:
       - google_id
       - google_secret
       - resend_api_key
+      - minio_accesskey
+      - minio_secretkey
     develop:
       watch:
         - action: sync
@@ -49,6 +54,11 @@ secrets:
     file: ./secret/google_secret.txt
   resend_api_key:
     file: ./secret/resend_api_key.txt
+  minio_accesskey:
+    file: ./secret/minio_accesskey.txt
+  minio_secretkey:
+    file: ./secret/minio_secretkey.txt
+
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the

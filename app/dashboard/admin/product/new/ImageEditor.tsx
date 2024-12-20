@@ -3,7 +3,6 @@ import ImageCard from "./ImageCard";
 import { ProductDetails, } from "./NewProductDetailsForm";
 import { FormEvent, forwardRef, useImperativeHandle, } from "react";
 
-
 const ImageEditor = forwardRef(function ImageEditor(props, ref) {
   const { register, control, getValues } = useFormContext<ProductDetails>();
   const { fields, append, update, remove } = useFieldArray({

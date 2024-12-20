@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import { Category } from "@prisma/client";
 
 export default function CategoryPage() {
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
   const currentPath = usePathname();
 
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const getCategories = async () => {
-      const response = await fetch(`/api/category`)
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/category`)
       if (!response.ok) {
         console.error(`fetch categories failed`);
         return;
@@ -32,6 +33,11 @@ export default function CategoryPage() {
     <div className="">
       <div className="sticky top-24 hidden sm:flex flex-col justify-start w-1/4 min-w-60 bg-white rounded-md py-8 px-4">
         <p className="text-xl font-bold text-zinc-400 py-2">Products categories</p>
+        <Link
+          href={`/shop/all`}
+          className={`${currentPath === `/shop/all` ? "text-orange-500" : "text-zinc-800"} hover:text-orange-500 py-1`}>
+          All Products
+        </Link>
         {
           categories?.map((item, index) =>
             <Link

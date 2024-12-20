@@ -1,4 +1,4 @@
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { FieldArrayWithId, UseFieldArrayRemove, UseFieldArrayUpdate, useFormContext } from "react-hook-form";
 import { PictureInfo, ProductDetails } from "./NewProductDetailsForm";
 
@@ -7,8 +7,21 @@ export default function ImageCard({ field, index, remove }: {
   index: number,
   remove: UseFieldArrayRemove,
 }) {
-
   const { register, setValue } = useFormContext();
+
+  const [imageUrl, setImageUrl] = useState<string>();
+  useEffect(() => {
+    const getImageUrl = async () => {
+      const response = await fetch(`/api/upload?name=${field.url}`);
+      if (!response.ok) {
+        console.error(`fetch presigned url response failed`);
+        return '';
+      }
+      const responseUrl = await response.json();
+      setImageUrl(responseUrl);
+    }
+    getImageUrl();
+  }, [field.url]);
 
   const updateDimension = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     if (
@@ -48,7 +61,8 @@ export default function ImageCard({ field, index, remove }: {
       <div className="min-w-28 relative flex justify-center items-center">
         <img
           className="w-28 h-28 object-contain"
-          src={field.url}
+          src={imageUrl}
+          // src={field.url}
           onLoad={(event) => updateDimension(event)}
         />
       </div>
