@@ -78,6 +78,9 @@ export async function findWebInfoByName(params: string) {
       where: {
         name: params,
       },
+      include: {
+        images: true,
+      }
     });
     return result;
   } catch (error) {
@@ -96,6 +99,9 @@ export async function findWebInfoByCategory(params: string) {
       where: {
         category: params,
       },
+      include: {
+        images: true,
+      }
     });
     return result;
   } catch (error) {

@@ -45,8 +45,8 @@ export async function PUT(req: NextRequest) {
     if (data.width) {
       picture.width = parseInt(data.width)
     }
-    if (data.productId) {
-      picture.productId = parseInt(data.productId)
+    if (data.webInfoId) {
+      picture.webInfoId = parseInt(data.webInfoId)
     }
     const result = validatePicture.safeParse(picture);
     if (!result.success) {

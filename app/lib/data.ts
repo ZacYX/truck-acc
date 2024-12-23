@@ -5,6 +5,7 @@ import { IconType } from "react-icons";
 import { CiMenuBurger } from "react-icons/ci";
 
 import { Category, Picture, Post, Product, User } from "@prisma/client";
+import internal from "stream";
 
 export const userListTitle = ["id", "name", "email", "roles.title"]
 export const roleListTitle = ["id", "title", "details", "permission.title", "user.name"]
@@ -28,10 +29,26 @@ export const menuItem: {
   link: "/shop/all",
 };
 
-export const firstData = {
+export type SectionImage = {
+  alt: string,
+  url: string,
+  width: number,
+  height: number,
+}
+
+export type SectionData = {
+  name: string,
+  category: string,
+  title: string[],
+  content: string[],
+  images: SectionImage[],
+}
+
+export const firstData: SectionData = {
   name: "first",
   category: "home",
   title: ["BEST VALUE", "FOR", "MONEY"],
+  content: [],
   images: [
     {
       alt: "grassland tent family lake",
@@ -42,7 +59,7 @@ export const firstData = {
   ]
 }
 
-export const secondData = {
+export const secondData: SectionData = {
   name: "second",
   category: "home",
   title: ["Good Prices, Good Quality"],
@@ -57,17 +74,19 @@ export const secondData = {
   ]
 }
 
-export const thirdData = {
+export const thirdData: SectionData = {
   name: "third",
   category: "home",
   title: ["Environment Canada issued a heavy"],
   content: ["Here we make it our duty to be the most affordable option on the market and offer you more! You’re guaranteed to get your money’s worth. If you find it's not in Canada with equivalent options, we’ll match it."],
+  images: []
 }
 
-export const fourthData = {
+export const fourthData: SectionData = {
   name: "fourth",
   category: "home",
   title: ["Why This Topper"],
+  content: [],
   images: [
     {
       alt: "night tent stars torch",
@@ -78,8 +97,8 @@ export const fourthData = {
   ]
 }
 
-export const fourthCardsData = {
-  name: "cards",
+export const fourthCardsData: SectionData = {
+  name: "fourthCards",
   category: "homeFourth",
   title: ["Envi Canada issued", "Environment issue", "Environment solution"],
   content: ["After winning the U.S. election this week, Mr. Trump will be impatient to make the tax cuts implemented during his first administration permanent, while lifting regulations in the financial, energy and technology sectors. That will boost corporate profits and provide a further injection of stimulus to the economy.",
@@ -87,19 +106,19 @@ export const fourthCardsData = {
     "After winning the U.S. election this week, Mr. Trump will be impatient to make the tax cuts implemented during his first administration permanent, while lifting regulations in the financial, energy and technology sectors. That will boost corporate profits and provide a further injection of stimulus to the economy.",
   ],
   images: [
-    {
-      url: GoBook,
-    },
-    {
-      url: TbPigMoney,
-    },
-    {
-      url: FiTruck,
-    }
+    // {
+    //   url: GoBook,
+    // },
+    // {
+    //   url: TbPigMoney,
+    // },
+    // {
+    //   url: FiTruck,
+    // }
   ]
 };
 
-export const fifthData = {
+export const fifthData: SectionData = {
   name: "fifth",
   category: "home",
   title: ["Truck Toppers", "Rooftop Tent", "Truck rack"],
@@ -116,13 +135,13 @@ export const fifthData = {
       url: "/images/topper.jpg",
     },
     {
-      name: "rooftop-topper",
+      alt: "rooftop-topper",
       width: 800,
       height: 600,
       url: "/images/rooftop-topper.jpg",
     },
     {
-      name: "rack-truck",
+      alt: "rack-truck",
       width: 530,
       height: 530,
       url: "/images/rack-truck.jpg",

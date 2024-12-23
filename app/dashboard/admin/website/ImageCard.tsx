@@ -1,4 +1,4 @@
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { FieldArrayWithId, UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { WebInfoWithImages } from "./WebInfoFormList";
 
@@ -10,6 +10,20 @@ export default function ImageCard({ field, index, isEditable }: {
 }) {
 
   const { register, setValue } = useFormContext();
+
+  const [imageUrl, setImageUrl] = useState<string>();
+  useEffect(() => {
+    const getImageUrl = async () => {
+      const response = await fetch(`/api/upload?name=${field.url}`);
+      if (!response.ok) {
+        console.error(`fetch presigned url response failed`);
+        return '';
+      }
+      const responseUrl = await response.json();
+      setImageUrl(responseUrl);
+    }
+    getImageUrl();
+  }, [field.url]);
 
   const updateDimension = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     if (
@@ -32,7 +46,8 @@ export default function ImageCard({ field, index, isEditable }: {
       <div className="min-w-28 relative flex justify-center items-center">
         <img
           className="w-28 h-28 object-contain"
-          src={field.url}
+          src={imageUrl}
+          // src={field.url}
           onLoad={(event) => updateDimension(event)}
         />
       </div>
@@ -65,7 +80,7 @@ export default function ImageCard({ field, index, isEditable }: {
               readOnly
             />
           </label>
-          <label className="flex flex-row items-center">
+          {/* <label className="flex flex-row items-center">
             <p className="font-semibold">isPrimary</p>
 
             <input
@@ -76,7 +91,7 @@ export default function ImageCard({ field, index, isEditable }: {
                 if (!isEditable) { e.preventDefault() }
               }}
             />
-          </label >
+          </label > */}
         </div>
         <label className="flex flex-row items-center">
           <p className="font-semibold">CreateAt</p>

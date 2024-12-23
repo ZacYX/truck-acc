@@ -24,6 +24,7 @@ COPY . .
 RUN chmod +x /app/docker-entrypoint.sh
 
 # ENV RESEND_API_KEY=dummy_key
+RUN apk add --no-cache openssl
 
 # Step 6: Build the project
 RUN npm run build

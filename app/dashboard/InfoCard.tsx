@@ -4,15 +4,17 @@ import { PropsWithChildren } from "react";
 import { IconType } from "react-icons";
 
 interface Props {
-  icon: IconType;
-  title: string;
-  content: string;
+  icon?: IconType;
+  title?: string;
+  content?: string;
 }
 
-export default function Card({icon, title, content, children}: PropsWithChildren<Props>) {
+export default function Card({ icon, title, content, children }: PropsWithChildren<Props>) {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start bg-zinc-100 p-8">
-      {React.createElement(icon, {size: 40, color: "#000"})}
+      {icon &&
+        React.createElement(icon, { size: 40, color: "#000" })
+      }
       <p className="pt-8 pb-4 text-lg font-bold">
         {title}
       </p>

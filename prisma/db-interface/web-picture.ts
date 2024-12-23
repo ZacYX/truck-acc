@@ -40,20 +40,38 @@ export async function createWebPictures(pictures: PictureWithoutId[]) {
 }
 
 export async function updateWebPicture(picture: WebPicture) {
+  const { id, webInfoId, ...updateInfo } = picture;
   try {
-    if (!picture.id) {
+    if (!id) {
       console.debug("No id to update picture");
       return;
     }
-    const result = await prisma.webPicture.update({
-      where: {
-        id: picture.id,
-      },
-      data: {
-        ...picture,
-      }
-    });
-    return result;
+    if (!webInfoId) {
+      const result = await prisma.webPicture.update({
+        where: {
+          id: id,
+        },
+        data: {
+          ...updateInfo,
+        }
+      });
+      return result;
+    } else {
+      const result = await prisma.webPicture.update({
+        where: {
+          id: id,
+        },
+        data: {
+          ...updateInfo,
+          WebInfo: {
+            connect: {
+              id: webInfoId,
+            }
+          }
+        }
+      });
+      return result;
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.error(`error name: ${error.name} `);
