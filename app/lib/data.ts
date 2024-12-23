@@ -4,9 +4,6 @@ import { FiTruck } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { CiMenuBurger } from "react-icons/ci";
 
-import { Category, Picture, Post, Product, User } from "@prisma/client";
-import internal from "stream";
-
 export const userListTitle = ["id", "name", "email", "roles.title"]
 export const roleListTitle = ["id", "title", "details", "permission.title", "user.name"]
 export const permissionListTitle = ["id", "title", "details", "roles.title"]
@@ -145,6 +142,23 @@ export const fifthData: SectionData = {
       width: 530,
       height: 530,
       url: "/images/rack-truck.jpg",
+    },
+  ]
+}
+
+export const aboutUsFirstData: SectionData = {
+  name: "aboutUsFirst",
+  category: "aboutus",
+  title: ["We are here waiting for you"],
+  content: [
+    "Special weather statements have been issued by Environment and Climate Change Canada on Wednesday morning. The agency says 10 to 15 centimetres of snow for parts of southeastern Saskatchewan and western Manitoba could arrive over the next several days.",
+  ],
+  images: [
+    {
+      alt: "topper",
+      width: 1336,
+      height: 819,
+      url: "/images/topper.jpg",
     },
   ]
 }

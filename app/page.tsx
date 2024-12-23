@@ -5,11 +5,17 @@ import InfoCard from "./dashboard/InfoCard";
 import { firstData, secondData, thirdData, fourthData, fifthData, fourthCardsData } from "./lib/data";
 import ShowCase from "./dashboard/Showcase";
 import { useEffect, useState } from "react";
-import { Picture } from "@prisma/client";
-import type { SectionData } from "./lib/data";
+import type { SectionData, SectionImage } from "./lib/data";
+import { WebPicture } from "@prisma/client";
 
 
 export default function Home() {
+  const [isFirstLoaded, setIsFirstLoaded] = useState(false);
+  const [isSecondLoaded, setIsSecondLoaded] = useState(false);
+  const [isThirdLoaded, setIsThirdLoaded] = useState(false);
+  const [isFourthLoaded, setIsFourthLoaded] = useState(false);
+  const [isFifthLoaded, setIsFifthLoaded] = useState(false);
+
   const [first, setFirst] = useState<SectionData>();
   const [second, setSecond] = useState<SectionData>();
   const [third, setThird] = useState<SectionData>();
@@ -35,18 +41,21 @@ export default function Home() {
     }
     //update image url to the presigned url
     const { images } = result;
-    if (!images) {
-      cb(result)
+    if (!images || images.length === 0) {
+      cb({
+        ...result,
+        images: initData.images,
+      })
       return
     }
-    const urlPromises = images.map((image: Picture) => (
+    const urlPromises = images.map((image: WebPicture) => (
       fetch(`/api/upload?name=${image.url}`)
     ))
     const urlResponses = await Promise.all(urlPromises);
     const urls = await Promise.all(urlResponses.map((item) => (
       item.json()
     )));
-    const updatedImages = images.map((item: Picture, index: number) => ({
+    const updatedImages = images.map((item: WebPicture, index: number) => ({
       ...item,
       url: urls[index]
     }))
@@ -67,15 +76,19 @@ export default function Home() {
     <div>
       {
         first &&
-        < div className="relative h-screen flex justify-center items-center">
-          <Image
-            src={first.images[0].url}
-            alt={first.images[0].alt}
-            width={first.images[0].width}
-            height={first.images[0].height}
-            className="absolute w-full h-full object-cover object-center"
-            priority
-          />
+        < div className={`relative h-screen flex justify-center items-center ${isFirstLoaded ? "block" : "hidden"}`}>
+          {
+            first.images &&
+            <Image
+              src={first.images[0].url ?? firstData.images[0].url}
+              alt={first.images[0].alt ?? firstData.images[0].alt}
+              width={first.images[0].width ?? firstData.images[0].width}
+              height={first.images[0].height ?? firstData.images[0].height}
+              className="absolute w-full h-full object-cover object-center"
+              priority
+              onLoadingComplete={() => setIsFirstLoaded(true)}
+            />
+          }
           <div className="z-10 relative  w-full p-16 flex flex-col justify-center items-center font-bold text-2xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl ">
             <p className="text-orange-500 ">{first.title[0]}</p>
             <p className="text-amber-400 ">{first.title[1]}</p>
@@ -86,15 +99,20 @@ export default function Home() {
 
       {
         second &&
-        <div className="relative min-h-[50vh] flex justify-center items-center">
-          <Image
-            src={second.images[0].url}
-            alt={second.images[0].alt}
-            width={second.images[0].width}
-            height={second.images[0].height}
-            className="absolute w-full h-full object-cover object-center"
-            priority
-          />
+        <div className={`relative min-h-[50vh] flex justify-center items-center ${isSecondLoaded ? "block" : "hidden"}`}>
+          {
+            second.images &&
+            <Image
+              src={second.images[0].url ?? secondData.images[0].url}
+              alt={second.images[0].alt ?? secondData.images[0].alt}
+              width={second.images[0].width ?? secondData.images[0].width}
+              height={second.images[0].height ?? secondData.images[0].height}
+              className="absolute w-full h-full object-cover object-center"
+              priority
+              onLoadingComplete={() => setIsSecondLoaded(true)}
+            />
+
+          }
           <div className="z-10 relative  w-full p-16 flex flex-col justify-center items-center text-zinc-300">
             <p className="xs:flex py-2 xs:py-4 text-center text-xl xs:text-2xl md:text-4xl">{second.title[0]}</p>
             <p className="py-2 xs:py-4 ">{second.content[0]}</p>
@@ -115,13 +133,17 @@ export default function Home() {
       {
         fourth &&
         <div className="relative flex justify-center items-center">
-          <Image
-            src={fourth.images[0].url}
-            alt={fourth.images[0].alt}
-            width={fourth.images[0].width ?? fourthData.images[0].width}
-            height={fourth.images[0].height ?? fourthData.images[0].height}
-            className="absolute w-full h-full object-cover object-center"
-          />
+          {
+            fourth.images &&
+            <Image
+              src={fourth.images[0].url ?? fourthData.images[0].url}
+              alt={fourth.images[0].alt ?? fourthData.images[0].alt}
+              width={fourth.images[0].width ?? fourthData.images[0].width}
+              height={fourth.images[0].height ?? fourthData.images[0].height}
+              className="absolute w-full h-full object-cover object-center"
+            />
+
+          }
           <div className="relative  w-full p-16 flex flex-col justify-center items-center ">
             <div className="relative w-full flex justify-center items-center flex-row py-8">
               <p className="text-5xl text-zinc-200">{fourth.title[0]}</p>
