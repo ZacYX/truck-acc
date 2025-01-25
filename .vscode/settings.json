@@ -1,0 +1,16 @@
+{
+  "maven.terminal.favorites": [
+    {
+      "command": "clean compile",
+      "debug": false
+    },
+    {
+      "command": "clean install",
+      "debug": false
+    },
+    {
+      "command": "clean compile",
+      "debug": false
+    }
+  ]
+}

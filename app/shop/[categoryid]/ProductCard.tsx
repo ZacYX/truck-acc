@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Category, Picture, Product } from "@prisma/client"
 import { useEffect, useState } from "react"
+import AddToCart from "@/app/cart/AddToCart"
 
 export default function ProductCard({ product }: {
   product: Product & {
@@ -50,14 +51,15 @@ export default function ProductCard({ product }: {
             />}
         </div>
         <p className="pb-1 hover:underline">{name}</p>
-        <p className="pb-1 hover:underline">Price: {price} $CND</p>
+        <p className="pb-1 hover:underline">${price}</p>
         {
           salePrice &&
           <p className="pb-2 hover:underline text-red-500">Sale: {salePrice} $CND</p>
 
         }
       </Link>
-      <button className="btn bg-orange-400">Add to cart</button>
+      {/* <button className="btn bg-orange-400">Add to cart</button> */}
+      <AddToCart product={product} />
     </div>
   )
 }

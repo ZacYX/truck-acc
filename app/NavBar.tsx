@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GiCampingTent } from "react-icons/gi";
 import { IoPersonOutline } from "react-icons/io5";
-import { IoCartOutline } from "react-icons/io5";
 import DropDownCategory from "./dashboard/DropDownCategory";
 import LoginButton from "./auth/components/LoginButton";
 import { useEffect, useState } from "react";
 import { NavbarItem } from "@prisma/client";
+import CartIcon from "./cart/CartIcon";
 
 export default function NavBar() {
   const currentPath = usePathname();
@@ -64,7 +64,10 @@ export default function NavBar() {
             <IoPersonOutline size={24} className="hover:text-orange-500" />
           </LoginButton>
           <div>
-            <IoCartOutline size={26} className="hover:text-orange-500" />
+            <Link href="/cart">
+              {/* <IoCartOutline size={26} className="hover:text-orange-500" /> */}
+              <CartIcon />
+            </Link>
           </div>
         </div>
       </div>

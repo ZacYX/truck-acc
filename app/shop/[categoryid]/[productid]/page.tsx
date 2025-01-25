@@ -3,6 +3,7 @@
 import Carousel from "@/app/shop/[categoryid]/[productid]/Carousel";
 import { useEffect, useState } from "react";
 import { ExtProduct } from "../page";
+import AddToCart from "@/app/cart/AddToCart";
 
 const BREAKPOINT = 768;
 
@@ -65,7 +66,8 @@ export default function ProductPage({ params }: { params: { categoryid: string, 
                 <label className="flex flex-row items-center gap-2">
                   <input type="number" min={1} defaultValue="1" className="w-32 h-10 text-center rounded-md" />
                 </label>
-                <button className="btn btn-warning">Add to cart</button>
+                {/* <button className="btn btn-warning">Add to cart</button> */}
+                <AddToCart product={product} />
               </div>
             </div>
           </div>
