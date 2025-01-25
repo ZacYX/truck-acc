@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "ts-patch install && typia patch",
-    "postinstall": "prisma generate"
+    "prepare": "[ \"$NODE_ENV\" != \"production\" ] && ts-patch install && typia patch || true",
+    "postinstall": "[ \"$NODE_ENV\" != \"production\" ] && prisma generate || true"
   },
   "dependencies": {
     "@auth/core": "^0.37.3",
@@ -22,7 +22,6 @@
     "@nextui-org/spinner": "^2.0.34",
     "@nextui-org/system": "^2.2.5",
     "@nextui-org/theme": "^2.2.9",
-    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.19.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -52,7 +51,6 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
-    "@types/js-cookie": "^3.0.6",
     "@types/multer": "^1.4.12",
     "@types/node": "^20",
     "@types/react": "^18",
