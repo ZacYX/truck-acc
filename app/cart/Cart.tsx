@@ -7,12 +7,25 @@ import { CartContext } from "./CartProvider";
 export default function Cart() {
   const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
   const cartContext = useContext(CartContext);
+  const [subtotal, setSubtotal] = useState(0);
+
+  useEffect(() => {
+    const getSubtotal = () => {
+      let total = 0;
+      if (currentCart?.items) {
+        currentCart.items.forEach((item => {
+          total = total + item.price * item.quantity;
+        }))
+        setSubtotal(total);
+      }
+    }
+    getSubtotal();
+  }, [cartContext?.currentCart?.items])
+
   if (!cartContext) {
     return (<div>Cart not found</div>)
   }
-
   const { currentCart, setCurrentCart } = cartContext;
-  const [subtotal, setSubtotal] = useState(0);
 
   const updateHandler = async (cartItem: CartItem) => {
     if (!currentCart) {
@@ -55,18 +68,6 @@ export default function Cart() {
     }
   }
 
-  useEffect(() => {
-    const getSubtotal = () => {
-      let total = 0;
-      if (currentCart?.items) {
-        currentCart.items.forEach((item => {
-          total = total + item.price * item.quantity;
-        }))
-        setSubtotal(total);
-      }
-    }
-    getSubtotal();
-  }, [currentCart?.items])
 
   return (
     <div className="flex flex-col-reverse md:flex-row">
@@ -83,6 +84,7 @@ export default function Cart() {
         {
           currentCart?.items?.map((item) => (
             <CartItem
+              key={item.id}
               cartItem={item}
               deleteHandler={deleteHandler}
               updateHandler={updateHandler}

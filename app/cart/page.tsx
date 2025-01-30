@@ -37,15 +37,21 @@ export default function CartPage() {
       }
       //set cart id, cart with user id
       if (cookieCart.items.length > 0) {
-        const promises = cookieCart.items.map((item) => (
-          fetch(`${NEXT_PUBLIC_API_URL}/apishopping/carts/${cart.id}/items`, {
-            method: "POST",
-            mode: "no-cors",
+        const promises = cookieCart.items.map((item) => {
+          const existingItem = cart.items.find((cartItem) => cartItem.productId === item.productId);
+          return fetch(`${NEXT_PUBLIC_API_URL}/apishopping/carts/${cart.id}/items`, {
+            method: existingItem ? "PUT" : "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(item),
+            body: JSON.stringify({
+              ...item,
+              quantity: item.quantity + (existingItem ? existingItem.quantity : 0)
+            }),
           })
-        ))
+        })
         const result = await Promise.allSettled(promises);
+        const response = await fetch(`${NEXT_PUBLIC_API_URL}/apishopping/carts/${cart.id}`);
+        const cartResult = await response.json();
+        setCurrentCart(cartResult);
       }
     }
     syncCarts();
