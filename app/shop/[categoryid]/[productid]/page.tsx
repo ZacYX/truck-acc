@@ -63,9 +63,9 @@ export default function ProductPage({ params }: { params: { categoryid: string, 
 
               }
               <div className="w-full flex flex-row justify-around">
-                <label className="flex flex-row items-center gap-2">
+                {/* <label className="flex flex-row items-center gap-2">
                   <input type="number" min={1} defaultValue="1" className="w-32 h-10 text-center rounded-md" />
-                </label>
+                </label> */}
                 {/* <button className="btn btn-warning">Add to cart</button> */}
                 <AddToCart product={product} />
               </div>
