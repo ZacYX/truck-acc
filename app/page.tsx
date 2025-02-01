@@ -6,15 +6,12 @@ import { firstData, secondData, thirdData, fourthData, fifthData, fourthCardsDat
 import ShowCase from "./dashboard/Showcase";
 import { useEffect, useState } from "react";
 import type { SectionData, SectionImage } from "./lib/data";
-import { WebPicture } from "@prisma/client";
+import { fetchData } from "./fetchHomePageData";
 
 
 export default function Home() {
   const [isFirstLoaded, setIsFirstLoaded] = useState(false);
   const [isSecondLoaded, setIsSecondLoaded] = useState(false);
-  const [isThirdLoaded, setIsThirdLoaded] = useState(false);
-  const [isFourthLoaded, setIsFourthLoaded] = useState(false);
-  const [isFifthLoaded, setIsFifthLoaded] = useState(false);
 
   const [first, setFirst] = useState<SectionData>();
   const [second, setSecond] = useState<SectionData>();
@@ -22,48 +19,6 @@ export default function Home() {
   const [fourth, setFourth] = useState<SectionData>();
   const [fourthCards, setFourthCards] = useState<SectionData>();
   const [fifth, setFifth] = useState<SectionData>();
-
-  const fetchData = async (
-    sectionName: string,
-    initData: SectionData,
-    cb: (data: SectionData) => void
-  ) => {
-    const response = await fetch(`/api/web-info?name=${sectionName}`);
-    if (!response.ok) {
-      console.error(`fetch section data ${sectionName} of home failed`);
-      return;
-    }
-    const result = await response.json();
-    if (!result) {
-      console.error(`result of ${sectionName} is empty`);
-      cb(initData);
-      return;
-    }
-    //update image url to the presigned url
-    const { images } = result;
-    if (!images || images.length === 0) {
-      cb({
-        ...result,
-        images: initData.images,
-      })
-      return
-    }
-    const urlPromises = images.map((image: WebPicture) => (
-      fetch(`/api/upload?name=${image.url}`)
-    ))
-    const urlResponses = await Promise.all(urlPromises);
-    const urls = await Promise.all(urlResponses.map((item) => (
-      item.json()
-    )));
-    const updatedImages = images.map((item: WebPicture, index: number) => ({
-      ...item,
-      url: urls[index]
-    }))
-    cb({
-      ...result,
-      images: updatedImages
-    });
-  }
 
   useEffect(() => { fetchData(`first`, firstData, setFirst); }, [])
   useEffect(() => { fetchData(`second`, secondData, setSecond); }, [])

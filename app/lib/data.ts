@@ -146,6 +146,22 @@ export const fifthData: SectionData = {
   ]
 }
 
+export const columnOneData: SectionData = {
+  name: "columnOne",
+  category: "Footer",
+  title: ["Business hours"],
+  content: ["Sunday and Monday: Closed", "Tuesday and Wednesday: 10 a.m. to 4 p.m.", "Thursday to Friday: 10 a.m. to 6 p.m.", "Saturday: 10 a.m. to 6 p.m."],
+  images: []
+};
+
+export const columnTwoData: SectionData = {
+  name: "columnTwo",
+  category: "Footer",
+  title: ["Contact"],
+  content: ["Phone: 1 888 898 4444", "Email: Zac.xu@outlook.com"],
+  images: []
+};
+
 export const aboutUsFirstData: SectionData = {
   name: "aboutUsFirst",
   category: "aboutus",

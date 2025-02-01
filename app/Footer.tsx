@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { IoLogoYoutube } from "react-icons/io5";
 import { SiFacebook } from "react-icons/si";
+import { fetchData } from "./fetchHomePageData";
+import { columnOneData, columnTwoData, SectionData } from "./lib/data";
 
 export default function Footer() {
   const formRef = useRef<HTMLFormElement>(null);
+
+  const [columnOne, setColumnOne] = useState<SectionData>();
+  const [columnTwo, setColunmTwo] = useState<SectionData>();
+
+  useEffect(() => { fetchData(`columnOne`, columnOneData, setColumnOne); }, [])
+  useEffect(() => { fetchData(`columnTwo`, columnTwoData, setColunmTwo); }, [])
 
   async function handleSubmit(formData: FormData) {
     const emailAddress = formData.get("emailAddress");
@@ -22,24 +30,29 @@ export default function Footer() {
     formRef.current?.reset();
   }
 
+
   return (
     <div className="relative-box bg-zinc-800">
       <div className="content-box flex-col ">
         <div className="w-full flex flex-wrap justify-between leading-8 text-zinc-100">
           <div>
-            <p className="text-2xl py-8 text-zinc-400">Bussiness hours</p>
+            <p className="text-2xl py-8 text-zinc-400">{columnOne?.title ?? columnOneData.title}</p>
             <div className="text-orange-500">
-              <p>Sunday and Monday: Closed</p>
-              <p>Tuesday and Wednesday: 10 a.m. to 4 p.m.</p>
-              <p>Thursday to Friday: 10 a.m. to 6 p.m.</p>
-              <p> Saturday: 10 a.m. to 6 p.m.</p>
+              {
+                columnOne?.content.map((item, index) => (
+                  <p key={index}>{item}</p>
+                ))
+              }
             </div>
           </div>
           <div>
-            <p className="text-2xl py-8 text-zinc-400">Contact</p>
+            <p className="text-2xl py-8 text-zinc-400">{columnTwo?.title ?? columnTwoData.title}</p>
             <div>
-              <p>Phone: 1 888 898 4444</p>
-              <p>Email: Zac.xu@outlook.com</p>
+              {
+                columnTwo?.content.map((item, index) => (
+                  <p key={index}>{item}</p>
+                ))
+              }
             </div>
           </div>
           <div>
