@@ -47,7 +47,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         const result = await Promise.allSettled(promises);
         const response = await fetch(`${NEXT_PUBLIC_API_URL}/apishopping/carts/${cart.id}`);
         const cartResult = await response.json();
-        console.debug(`current cart: ${JSON.stringify(cart)}`);
+        // console.debug(`current cart: ${JSON.stringify(cart)}`);
         setCurrentCart(cartResult);
         return;
       }
@@ -59,7 +59,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
   //get cart by user id when logged in
   useEffect(() => {
     const getCart = async () => {
-      console.debug(`session.user: ${JSON.stringify(session?.user)}`);
+      // console.debug(`session.user: ${JSON.stringify(session?.user)}`);
       if (!session?.user) {
         console.log(`User has not logged in`);
         return;
@@ -70,7 +70,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         return;
       }
       const cart = await response.json();
-      console.debug(`user cart: ${JSON.stringify(cart)}`);
+      // console.debug(`user cart: ${JSON.stringify(cart)}`);
       setCart(cart);
     }
     getCart();
@@ -80,7 +80,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const getCookieCart = async () => {
       let sessionUserId = Cookies.get("tempUserId");
-      console.debug(`Get tempUserId: ${sessionUserId}`);
+      // console.debug(`Get tempUserId: ${sessionUserId}`);
       if (!sessionUserId) {
         sessionUserId = createId();
         console.debug(`Session id created: ${sessionUserId}`);
@@ -93,7 +93,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         return;
       }
       const cart = await response.json();
-      console.debug(`cookie cart: ${JSON.stringify(cart)}`);
+      // console.debug(`cookie cart: ${JSON.stringify(cart)}`);
       setCookieCart(cart);
     }
     getCookieCart();
